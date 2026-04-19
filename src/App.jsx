@@ -67,7 +67,7 @@ function App() {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', gap: '1rem' }}>
         <Loader2 size={48} className="text-primary" style={{ animation: 'spin 1s linear infinite' }} />
-        <p style={{ color: 'var(--text-secondary)' }}>กำลังโหลดข้อมูลการลงทุน...</p>
+        <p style={{ color: 'var(--text-secondary)' }}>กำลังโหลดข้อมูล...</p>
         <style>{`
           @keyframes spin {
             from { transform: rotate(0deg); }

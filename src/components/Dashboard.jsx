@@ -7,16 +7,16 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
   const { totals, members } = data;
 
   return (
-    <div style={{ padding: 'var(--spacing-xl) 0', maxWidth: '1200px', margin: '0 auto' }}>
-      <header style={{ marginBottom: 'var(--spacing-xl)', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: '700', marginBottom: 'var(--spacing-sm)', background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
-          Investment Dashboard
+    <div style={{ padding: 'var(--spacing-lg) 0', maxWidth: '1200px', margin: '0 auto' }}>
+      <header style={{ marginBottom: 'var(--spacing-lg)', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: '700', marginBottom: 'var(--spacing-xs)', background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          REAL ESTATE (อสังหาริมทรัพย์)
         </h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-md)' }}>ระบบสรุปผลการลงทุนและสถานะการเงินของสมาชิก</p>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-md)' }}>Summary (สรุปยอด)</p>
         
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           {availableYears.length > 0 && (
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-card)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-card)', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-full)', border: '1px solid var(--border-color)' }}>
               <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>ปีที่ลงทุน:</span>
               <select 
                 value={selectedYear} 
@@ -40,7 +40,7 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
           )}
 
           {availableMembers && availableMembers.length > 0 && (
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-card)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-card)', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-full)', border: '1px solid var(--border-color)' }}>
               <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>สมาชิก:</span>
               <select 
                 value={selectedMember} 
@@ -70,7 +70,7 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
       <Charts data={data} />
 
       <div>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: 'var(--spacing-lg)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: 'var(--spacing-md)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           รายละเอียดสมาชิก
           <span style={{ fontSize: '0.875rem', fontWeight: 'normal', backgroundColor: 'var(--bg-hover)', padding: '0.2rem 0.6rem', borderRadius: 'var(--radius-full)', color: 'var(--text-secondary)' }}>
             {members.length} ท่าน

@@ -30,15 +30,15 @@ export const MemberCard = ({ member, index }) => {
 
   return (
     <div className="bg-card animate-fade-in" style={{ animationDelay: `${0.1 * (index + 1)}s`, marginBottom: 'var(--spacing-md)' }}>
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-sm)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center" style={{ marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-sm)', borderBottom: '1px solid var(--border-color)', gap: 'var(--spacing-sm)' }}>
         <div className="flex items-center gap-sm">
-          <div style={{ padding: '0.5rem', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: 'var(--radius-full)' }}>
+          <div style={{ padding: '0.5rem', backgroundColor: 'var(--bg-secondary)', borderRadius: 'var(--radius-full)' }}>
             <User size={20} style={{ color: 'var(--text-secondary)' }} />
           </div>
           <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--text-primary)' }}>{name}</h2>
         </div>
         
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', width: '100%' }} className="md:justify-end">
           <StatusBadge count={statuses['จ่ายแล้ว']} label="จ่ายแล้ว" type="success" />
           <StatusBadge count={statuses['ค้างจ่าย']} label="ค้างจ่าย" type="danger" />
           {Object.entries(statuses).map(([key, count]) => {
@@ -50,7 +50,7 @@ export const MemberCard = ({ member, index }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-md">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-md">
         <div>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ต้นทุน</p>
           <p style={{ fontSize: '1.125rem', fontWeight: '600' }}>{formatCurrency(totals.cost)}</p>

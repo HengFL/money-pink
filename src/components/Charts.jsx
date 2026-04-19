@@ -17,7 +17,7 @@ export const Charts = ({ data }) => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div style={{ backgroundColor: 'var(--bg-card)', padding: '1rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)' }}>
+        <div style={{ backgroundColor: 'var(--bg-card)', padding: '0.75rem 1rem', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)' }}>
           <p style={{ fontWeight: '600', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>{label}</p>
           {payload.map((entry, index) => (
             <p key={index} style={{ color: entry.color, fontSize: '0.875rem', marginBottom: '0.25rem' }}>
@@ -33,7 +33,7 @@ export const Charts = ({ data }) => {
   return (
     <div className="bg-card animate-fade-in" style={{ animationDelay: '0.6s', marginTop: 'var(--spacing-xl)', marginBottom: 'var(--spacing-xl)' }}>
       <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: 'var(--spacing-lg)' }}>สรุปภาพรวมการเงินแยกตามสมาชิก</h2>
-      <div style={{ height: '400px', width: '100%' }}>
+      <div style={{ height: '350px', width: '100%' }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
@@ -44,10 +44,10 @@ export const Charts = ({ data }) => {
               bottom: 5,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
             <XAxis dataKey="name" stroke="var(--text-secondary)" tick={{ fill: 'var(--text-secondary)' }} />
             <YAxis stroke="var(--text-secondary)" tick={{ fill: 'var(--text-secondary)' }} tickFormatter={(value) => `฿${value}`} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.02)' }} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.02)' }} />
             <Legend wrapperStyle={{ paddingTop: '20px' }} />
             <Bar dataKey="ต้นทุน" fill="var(--accent-primary)" radius={[4, 4, 0, 0]} />
             <Bar dataKey="ยอดจ่าย" fill="var(--accent-success)" radius={[4, 4, 0, 0]} />

@@ -131,8 +131,24 @@ export const processDashboardData = (rawData) => {
     }
   });
 
-  // Convert Map to Array and sort by name
-  const members = Array.from(memberMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+  // Custom member sorting order
+  const customOrder = ['รอมือลาห์', 'ปาตีเมาะห์', 'อิบรอเฮง', 'ซากีเราะห์'];
+  
+  // Convert Map to Array and sort by custom order
+  const members = Array.from(memberMap.values()).sort((a, b) => {
+    const indexA = customOrder.indexOf(a.name);
+    const indexB = customOrder.indexOf(b.name);
+    
+    if (indexA !== -1 && indexB !== -1) {
+      return indexA - indexB;
+    } else if (indexA !== -1) {
+      return -1;
+    } else if (indexB !== -1) {
+      return 1;
+    } else {
+      return a.name.localeCompare(b.name);
+    }
+  });
   const monthlyData = Array.from(monthlyMap.values()).sort((a, b) => a.monthKey.localeCompare(b.monthKey));
 
   return {
