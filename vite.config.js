@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/real-estate/', // แก้ไขชื่อ repo ตรงนี้ให้ตรงกับชื่อบน GitHub
+  base: process.env.NODE_ENV === 'production' ? '/real-estate/' : '/',
   plugins: [react()],
 })
