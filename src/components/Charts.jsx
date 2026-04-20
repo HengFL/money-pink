@@ -35,8 +35,10 @@ export const Charts = ({ data }) => {
        // Stacked Bar values for this member
        row[`${m.name}_cost`] = runningTotals[m.name].cost;
        row[`${m.name}_paid`] = runningTotals[m.name].paid;
-       row[`${m.name}_outstandingPay`] = runningTotals[m.name].outstandingPay;
-       row[`${m.name}_outstandingReceive`] = runningTotals[m.name].outstandingReceive;
+       
+       let calculatedUnpaid = runningTotals[m.name].cost - runningTotals[m.name].paid;
+       if (calculatedUnpaid < 0) calculatedUnpaid = 0;
+       row[`${m.name}_calculatedUnpaid`] = calculatedUnpaid;
 
        // Line value for this member (based on selected metric)
        if (selectedMetricKey === 'all') {
@@ -76,6 +78,7 @@ export const Charts = ({ data }) => {
     }, []);
 
     if (active && payload && payload.length && !hidden) {
+      const rowData = payload[0].payload;
       return (
         <div style={{ backgroundColor: 'var(--bg-card)', padding: '0.75rem 1rem', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)', maxWidth: '350px', position: 'relative' }}>
           <button 
@@ -87,12 +90,11 @@ export const Charts = ({ data }) => {
           <p style={{ fontWeight: '600', marginBottom: '0.5rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem', paddingRight: '1.5rem' }}>{label}</p>
           {members.map(m => {
             const mLine = payload.find(p => p.dataKey === m.name);
-            const mCost = payload.find(p => p.dataKey === `${m.name}_cost`);
-            const mPaid = payload.find(p => p.dataKey === `${m.name}_paid`);
-            const mOutPay = payload.find(p => p.dataKey === `${m.name}_outstandingPay`);
-            const mOutRec = payload.find(p => p.dataKey === `${m.name}_outstandingReceive`);
+            const mCost = rowData[`${m.name}_cost`];
+            const mPaid = rowData[`${m.name}_paid`];
+            const mCalcUnpaid = rowData[`${m.name}_calculatedUnpaid`];
             
-            if (!mLine && !mCost) return null;
+            if (!mLine && mCost === undefined && mPaid === undefined) return null;
             
             return (
               <div key={m.name} style={{ marginBottom: '0.75rem', paddingBottom: '0.75rem', borderBottom: '1px dashed var(--border-color)' }}>
@@ -101,12 +103,10 @@ export const Charts = ({ data }) => {
                   {m.name}
                 </p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem', fontSize: '0.75rem', paddingLeft: '1rem' }}>
-                  {mCost && <div><span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>■</span> ต้นทุน: ฿{mCost.value.toLocaleString()}</div>}
-                  {mPaid && <div><span style={{ color: 'var(--accent-success)', fontWeight: 'bold' }}>■</span> ยอดจ่าย: ฿{mPaid.value.toLocaleString()}</div>}
-                  {mOutPay && <div><span style={{ color: 'var(--accent-danger)', fontWeight: 'bold' }}>■</span> ค้างจ่าย: ฿{mOutPay.value.toLocaleString()}</div>}
-                  {mOutRec && <div><span style={{ color: 'var(--accent-secondary)', fontWeight: 'bold' }}>■</span> ค้างรับ: ฿{mOutRec.value.toLocaleString()}</div>}
+                  {mCost !== undefined && <div><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold' }}>■</span> ต้นทุนรวม: ฿{mCost.toLocaleString()}</div>}
+                  {mPaid !== undefined && <div><span style={{ color: 'var(--accent-success)', fontWeight: 'bold' }}>■</span> ยอดจ่าย: ฿{mPaid.toLocaleString()}</div>}
+                  {mCalcUnpaid !== undefined && <div><span style={{ color: 'var(--accent-danger)', fontWeight: 'bold' }}>■</span> ค้างจ่าย: ฿{mCalcUnpaid.toLocaleString()}</div>}
                 </div>
-                {mLine && <p style={{ fontSize: '0.85rem', margin: '4px 0 0 1rem', fontWeight: '600' }}>รวมเส้น ({selectedMetric}): ฿{mLine.value.toLocaleString()}</p>}
               </div>
             );
           })}
@@ -119,7 +119,17 @@ export const Charts = ({ data }) => {
   const CustomLegend = (props) => {
     const { payload } = props;
     // We only need the payload items that come from the Lines (which represent members)
-    const linePayload = payload.filter(entry => !entry.dataKey.includes('_'));
+    let linePayload = payload.filter(entry => !entry.dataKey.includes('_'));
+    
+    const customOrder = ['รอมือลาห์', 'ปาตีเมาะห์', 'อิบรอเฮง', 'ซากีเราะห์'];
+    linePayload = linePayload.sort((a, b) => {
+      const indexA = customOrder.indexOf(a.value);
+      const indexB = customOrder.indexOf(b.value);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return String(a.value).localeCompare(String(b.value));
+    });
     
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px', gap: '10px' }}>
@@ -135,16 +145,10 @@ export const Charts = ({ data }) => {
         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', fontSize: '0.875rem', backgroundColor: 'var(--bg-main)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)' }}>
           <span style={{ color: 'var(--text-secondary)' }}>สีกราฟแท่ง (Stacked):</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: 12, height: 12, backgroundColor: 'var(--accent-primary)', display: 'inline-block', borderRadius: '2px' }}></span> ต้นทุน
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: 12, height: 12, backgroundColor: 'var(--accent-success)', display: 'inline-block', borderRadius: '2px' }}></span> ยอดจ่าย
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: 12, height: 12, backgroundColor: 'var(--accent-danger)', display: 'inline-block', borderRadius: '2px' }}></span> ค้างจ่าย
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: 12, height: 12, backgroundColor: 'var(--accent-secondary)', display: 'inline-block', borderRadius: '2px' }}></span> ค้างรับ
           </span>
         </div>
       </div>
@@ -196,12 +200,27 @@ export const Charts = ({ data }) => {
             <Legend content={<CustomLegend />} />
             
             {/* Grouped Stacked Bars for Members */}
-            {members.map((member) => (
+            {members.map((member, index) => (
               <React.Fragment key={`bars-${member.name}`}>
-                <Bar dataKey={`${member.name}_cost`} stackId={member.name} fill="var(--accent-primary)" opacity={0.6} legendType="none" />
-                <Bar dataKey={`${member.name}_paid`} stackId={member.name} fill="var(--accent-success)" opacity={0.6} legendType="none" />
-                <Bar dataKey={`${member.name}_outstandingPay`} stackId={member.name} fill="var(--accent-danger)" opacity={0.6} legendType="none" />
-                <Bar dataKey={`${member.name}_outstandingReceive`} stackId={member.name} fill="var(--accent-secondary)" opacity={0.6} legendType="none" radius={[4, 4, 0, 0]} />
+                <Bar 
+                  dataKey={`${member.name}_paid`} 
+                  stackId={member.name} 
+                  fill="var(--accent-success)" 
+                  stroke={memberColors[index % memberColors.length]}
+                  strokeWidth={2}
+                  fillOpacity={0.4} 
+                  legendType="none" 
+                />
+                <Bar 
+                  dataKey={`${member.name}_calculatedUnpaid`} 
+                  stackId={member.name} 
+                  fill="var(--accent-danger)" 
+                  stroke={memberColors[index % memberColors.length]}
+                  strokeWidth={2}
+                  fillOpacity={0.4} 
+                  legendType="none" 
+                  radius={[4, 4, 0, 0]} 
+                />
               </React.Fragment>
             ))}
             
