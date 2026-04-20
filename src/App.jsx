@@ -44,8 +44,16 @@ function App() {
 
   const availableMembers = React.useMemo(() => {
     if (!rawData) return [];
-    const members = new Set(rawData.map(item => item['สมาชิก']).filter(Boolean));
-    return Array.from(members).sort();
+    const members = new Set(rawData.map(item => item['สมาชิก'] ? String(item['สมาชิก']).trim() : '').filter(Boolean));
+    const customOrder = ['รอมือลาห์', 'ปาตีเมาะห์', 'อิบรอเฮง', 'ซากีเราะห์'];
+    return Array.from(members).sort((a, b) => {
+      const indexA = customOrder.indexOf(a);
+      const indexB = customOrder.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return a.localeCompare(b);
+    });
   }, [rawData]);
 
   const dashboardData = React.useMemo(() => {
@@ -57,10 +65,10 @@ function App() {
     }
     
     if (selectedMember !== 'All') {
-      filtered = filtered.filter(item => item['สมาชิก'] === selectedMember);
+      filtered = filtered.filter(item => (item['สมาชิก'] ? String(item['สมาชิก']).trim() : '') === selectedMember);
     }
     
-    return processDashboardData(filtered);
+    return processDashboardData(filtered, selectedYear);
   }, [rawData, selectedYear, selectedMember]);
 
   if (loading) {

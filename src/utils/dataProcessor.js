@@ -1,4 +1,4 @@
-export const processDashboardData = (rawData) => {
+export const processDashboardData = (rawData, selectedYear = 'All') => {
   const totals = {
     cost: 0,
     paid: 0,
@@ -36,7 +36,7 @@ export const processDashboardData = (rawData) => {
     const received = Number(item['ยอดรับ (฿)']) || 0;
     const outReceive = Number(item['ค้างรับ (฿)']) || 0;
     
-    const memberName = item['สมาชิก'];
+    const memberName = item['สมาชิก'] ? String(item['สมาชิก']).trim() : '';
     const status = item['สถานะ'];
 
     // Update overall totals
@@ -93,7 +93,7 @@ export const processDashboardData = (rawData) => {
     // Add to transactions (optional, for detailed view later)
     memberData.transactions.push(item);
 
-    // Calculate monthly data for TradingView-like chart
+    // Calculate timeline data (Year or Month) for the chart
     let dateStr = item['วันที่ทำ'] || item['วันที่สรุป'];
     let monthKey = '';
     let yearKey = String(item['source_year'] || new Date().getFullYear());
@@ -114,20 +114,46 @@ export const processDashboardData = (rawData) => {
           break;
         }
       }
+      if (!monthKey) monthKey = '01'; // Default to Jan if unknown to group it safely
     }
 
-    if (monthKey) {
-      const fullMonthKey = `${yearKey}-${monthKey}`;
-      if (!monthlyMap.has(fullMonthKey)) {
-        monthlyMap.set(fullMonthKey, {
-           monthKey: fullMonthKey,
-           displayMonth: getThaiMonthAbbr(monthKey) + ' ' + yearKey.substring(2)
+    let timeKey = '';
+    let displayTime = '';
+
+    if (selectedYear === 'All') {
+      timeKey = yearKey;
+      displayTime = yearKey;
+    } else {
+      timeKey = `${yearKey}-${monthKey}`;
+      displayTime = getThaiMonthAbbr(monthKey);
+    }
+
+    if (timeKey) {
+      if (!monthlyMap.has(timeKey)) {
+        monthlyMap.set(timeKey, {
+           timeKey: timeKey,
+           displayTime: displayTime
         });
       }
       
-      const mData = monthlyMap.get(fullMonthKey);
-      if (!mData[memberName]) mData[memberName] = 0;
-      mData[memberName] += paid; // using Paid (ยอดจ่าย) as requested
+      const mData = monthlyMap.get(timeKey);
+      if (!mData[memberName]) {
+        mData[memberName] = { 
+          cost: 0, 
+          paid: 0, 
+          outstandingPay: 0, 
+          income: 0, 
+          received: 0, 
+          outstandingReceive: 0 
+        };
+      }
+      
+      mData[memberName].cost += cost;
+      mData[memberName].paid += paid;
+      mData[memberName].outstandingPay += outPay;
+      mData[memberName].income += income;
+      mData[memberName].received += received;
+      mData[memberName].outstandingReceive += outReceive;
     }
   });
 
@@ -149,12 +175,12 @@ export const processDashboardData = (rawData) => {
       return a.name.localeCompare(b.name);
     }
   });
-  const monthlyData = Array.from(monthlyMap.values()).sort((a, b) => a.monthKey.localeCompare(b.monthKey));
+  const timelineData = Array.from(monthlyMap.values()).sort((a, b) => a.timeKey.localeCompare(b.timeKey));
 
   return {
     totals,
     members,
-    monthlyData
+    timelineData
   };
 };
 
