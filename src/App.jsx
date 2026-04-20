@@ -7,7 +7,8 @@ const API_URL = 'https://script.googleusercontent.com/macros/echo?user_content_k
 
 function App() {
   const [rawData, setRawData] = useState(null);
-  const [selectedYear, setSelectedYear] = useState('All');
+  const currentYear = new Date().getFullYear().toString();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedMember, setSelectedMember] = useState('All');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

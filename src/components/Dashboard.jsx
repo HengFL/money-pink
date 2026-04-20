@@ -17,7 +17,7 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
         <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           {availableYears.length > 0 && (
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-card)', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-full)', border: '1px solid var(--border-color)' }}>
-              <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>ปีที่ลงทุน:</span>
+              <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>ปี:</span>
               <select 
                 value={selectedYear} 
                 onChange={(e) => onYearChange(e.target.value)}
