@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-export const Charts = ({ data }) => {
+export const CentralMoneyCharts = ({ data }) => {
   const { timelineData, members } = data;
-  const [selectedMetric, setSelectedMetric] = useState('ยอดจ่าย');
+  const [selectedMetric, setSelectedMetric] = useState('ยอดเก็บ');
 
   const metricMap = {
-    'ต้นทุน': 'cost',
-    'ยอดจ่าย': 'paid',
-    'ค้างจ่าย': 'outstandingPay',
-    'ค้างรับ': 'outstandingReceive',
+    'ยอดเรียก': 'called',
+    'ยอดเก็บ': 'collected',
+    'ยอดค้าง': 'outstanding',
+    'ยอดเบิกเงิน': 'withdrawn',
+    'ยอดยืมเงิน': 'borrowed',
+    'ยอดคืนเงิน': 'returned',
+    'ยอดค้างคืน': 'outstandingReturn',
     'ทั้งหมด': 'all'
   };
 
-  const selectedMetricKey = metricMap[selectedMetric] || 'cost';
+  const selectedMetricKey = metricMap[selectedMetric] || 'collected';
 
   const runningTotals = {};
   members.forEach(m => {
-    runningTotals[m.name] = { cost: 0, paid: 0, outstandingPay: 0, outstandingReceive: 0 };
+    runningTotals[m.name] = { called: 0, collected: 0, outstanding: 0, withdrawn: 0, borrowed: 0, returned: 0, outstandingReturn: 0 };
   });
 
   const chartData = timelineData.map(item => {
@@ -27,23 +30,23 @@ export const Charts = ({ data }) => {
     // Process Lines and Bars (Members)
     members.forEach(m => {
        if (item[m.name]) {
-         runningTotals[m.name].cost += (item[m.name].cost || 0);
-         runningTotals[m.name].paid += (item[m.name].paid || 0);
-         runningTotals[m.name].outstandingPay += (item[m.name].outstandingPay || 0);
-         runningTotals[m.name].outstandingReceive += (item[m.name].outstandingReceive || 0);
+         runningTotals[m.name].called += (item[m.name].called || 0);
+         runningTotals[m.name].collected += (item[m.name].collected || 0);
+         runningTotals[m.name].outstanding += (item[m.name].outstanding || 0);
+         runningTotals[m.name].withdrawn += (item[m.name].withdrawn || 0);
+         runningTotals[m.name].borrowed += (item[m.name].borrowed || 0);
+         runningTotals[m.name].returned += (item[m.name].returned || 0);
+         runningTotals[m.name].outstandingReturn += (item[m.name].outstandingReturn || 0);
        }
        
        // Stacked Bar values for this member
-       row[`${m.name}_cost`] = runningTotals[m.name].cost;
-       row[`${m.name}_paid`] = runningTotals[m.name].paid;
-       
-       let calculatedUnpaid = runningTotals[m.name].cost - runningTotals[m.name].paid;
-       if (calculatedUnpaid < 0) calculatedUnpaid = 0;
-       row[`${m.name}_calculatedUnpaid`] = calculatedUnpaid;
+       row[`${m.name}_called`] = runningTotals[m.name].called;
+       row[`${m.name}_collected`] = runningTotals[m.name].collected;
+       row[`${m.name}_outstanding`] = runningTotals[m.name].outstanding;
 
        let metricVal = 0;
        if (selectedMetricKey === 'all') {
-         metricVal = runningTotals[m.name].cost + runningTotals[m.name].paid + runningTotals[m.name].outstandingPay + runningTotals[m.name].outstandingReceive;
+         metricVal = runningTotals[m.name].called + runningTotals[m.name].withdrawn + runningTotals[m.name].borrowed;
        } else {
          metricVal = runningTotals[m.name][selectedMetricKey];
        }
@@ -94,11 +97,11 @@ export const Charts = ({ data }) => {
           <p style={{ fontWeight: '600', marginBottom: '0.5rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem', paddingRight: '1.5rem' }}>{label}</p>
           {members.map(m => {
             const mLine = payload.find(p => p.dataKey === m.name);
-            const mCost = rowData[`${m.name}_cost`];
-            const mPaid = rowData[`${m.name}_paid`];
-            const mCalcUnpaid = rowData[`${m.name}_calculatedUnpaid`];
+            const mCalled = rowData[`${m.name}_called`];
+            const mCollected = rowData[`${m.name}_collected`];
+            const mOutstanding = rowData[`${m.name}_outstanding`];
             
-            if (!mLine && mCost === undefined && mPaid === undefined) return null;
+            if (!mLine && mCalled === undefined && mCollected === undefined) return null;
             
             return (
               <div key={m.name} style={{ marginBottom: '0.75rem', paddingBottom: '0.75rem', borderBottom: '1px dashed var(--border-color)' }}>
@@ -107,9 +110,9 @@ export const Charts = ({ data }) => {
                   {m.name}
                 </p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem', fontSize: '0.75rem', paddingLeft: '1rem' }}>
-                  {mCost !== undefined && <div><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold' }}>■</span> ต้นทุนรวม: ฿{mCost.toLocaleString()}</div>}
-                  {mPaid !== undefined && <div><span style={{ color: 'var(--accent-success)', fontWeight: 'bold' }}>■</span> ยอดจ่าย: ฿{mPaid.toLocaleString()}</div>}
-                  {mCalcUnpaid !== undefined && <div><span style={{ color: 'var(--accent-danger)', fontWeight: 'bold' }}>■</span> ค้างจ่าย: ฿{mCalcUnpaid.toLocaleString()}</div>}
+                  {mCalled !== undefined && <div><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold' }}>■</span> ยอดเรียก: ฿{mCalled.toLocaleString()}</div>}
+                  {mCollected !== undefined && <div><span style={{ color: 'var(--accent-success)', fontWeight: 'bold' }}>■</span> ยอดเก็บ: ฿{mCollected.toLocaleString()}</div>}
+                  {mOutstanding !== undefined && <div><span style={{ color: 'var(--accent-danger)', fontWeight: 'bold' }}>■</span> ยอดค้าง: ฿{mOutstanding.toLocaleString()}</div>}
                 </div>
               </div>
             );
@@ -120,7 +123,8 @@ export const Charts = ({ data }) => {
     return null;
   };
 
-  const CustomLegend = () => {
+  const CustomLegend = (props) => {
+    const { payload } = props;
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px', gap: '10px' }}>
         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
@@ -133,10 +137,10 @@ export const Charts = ({ data }) => {
         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', fontSize: '0.875rem', backgroundColor: 'var(--bg-main)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)' }}>
           <span style={{ color: 'var(--text-secondary)' }}>สีกราฟแท่ง (Stacked):</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: 12, height: 12, backgroundColor: 'var(--accent-success)', display: 'inline-block', borderRadius: '2px' }}></span> ยอดจ่าย
+            <span style={{ width: 12, height: 12, backgroundColor: 'var(--accent-success)', display: 'inline-block', borderRadius: '2px' }}></span> ยอดเก็บ
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: 12, height: 12, backgroundColor: 'var(--accent-danger)', display: 'inline-block', borderRadius: '2px' }}></span> ค้างจ่าย
+            <span style={{ width: 12, height: 12, backgroundColor: 'var(--accent-danger)', display: 'inline-block', borderRadius: '2px' }}></span> ยอดค้าง
           </span>
         </div>
       </div>
@@ -163,10 +167,13 @@ export const Charts = ({ data }) => {
             }}
           >
             <option value="ทั้งหมด" style={{ color: '#000' }}>ทั้งหมด</option>
-            <option value="ต้นทุน" style={{ color: '#000' }}>ต้นทุน</option>
-            <option value="ยอดจ่าย" style={{ color: '#000' }}>ยอดจ่าย</option>
-            <option value="ค้างจ่าย" style={{ color: '#000' }}>ค้างจ่าย</option>
-            <option value="ค้างรับ" style={{ color: '#000' }}>ค้างรับ</option>
+            <option value="ยอดเรียก" style={{ color: '#000' }}>ยอดเรียก</option>
+            <option value="ยอดเก็บ" style={{ color: '#000' }}>ยอดเก็บ</option>
+            <option value="ยอดค้าง" style={{ color: '#000' }}>ยอดค้าง</option>
+            <option value="ยอดเบิกเงิน" style={{ color: '#000' }}>ยอดเบิกเงิน</option>
+            <option value="ยอดยืมเงิน" style={{ color: '#000' }}>ยอดยืมเงิน</option>
+            <option value="ยอดคืนเงิน" style={{ color: '#000' }}>ยอดคืนเงิน</option>
+            <option value="ยอดค้างคืน" style={{ color: '#000' }}>ยอดค้างคืน</option>
           </select>
         </div>
       </div>
@@ -191,7 +198,7 @@ export const Charts = ({ data }) => {
             {members.map((member, index) => (
               <React.Fragment key={`bars-${member.name}`}>
                 <Bar 
-                  dataKey={`${member.name}_paid`} 
+                  dataKey={`${member.name}_collected`} 
                   stackId={member.name} 
                   fill="var(--accent-success)" 
                   stroke="none"
@@ -199,7 +206,7 @@ export const Charts = ({ data }) => {
                   legendType="none" 
                 />
                 <Bar 
-                  dataKey={`${member.name}_calculatedUnpaid`} 
+                  dataKey={`${member.name}_outstanding`} 
                   stackId={member.name} 
                   fill="var(--accent-danger)" 
                   stroke="none"

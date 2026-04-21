@@ -57,8 +57,21 @@ export const SummaryCards = ({ totals }) => {
         </div>
       </div>
       
+      {/* ยอดรับรวม (Total Received) */}
+      <div className="bg-card animate-fade-in col-span-1 lg:col-span-2" style={{ animationDelay: '0.45s' }}>
+        <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
+          <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>ยอดรับทั้งหมด</h3>
+          <div style={{ padding: '0.5rem', backgroundColor: 'rgba(16, 185, 129, 0.1)', borderRadius: 'var(--radius-full)' }}>
+            <Banknote size={20} className="text-success" />
+          </div>
+        </div>
+        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-primary)' }}>
+          {formatCurrency(totals.received)}
+        </div>
+      </div>
+      
       {/* ค้างรับรวม (Total Outstanding Receive) */}
-      <div className="bg-card animate-fade-in col-span-1 lg:col-span-4" style={{ animationDelay: '0.5s' }}>
+      <div className="bg-card animate-fade-in col-span-1 lg:col-span-2" style={{ animationDelay: '0.5s' }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
           <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>ค้างรับทั้งหมด</h3>
           <div style={{ padding: '0.5rem', backgroundColor: 'rgba(139, 92, 246, 0.1)', borderRadius: 'var(--radius-full)' }}>
