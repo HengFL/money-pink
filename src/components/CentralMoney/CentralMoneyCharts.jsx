@@ -4,6 +4,7 @@ import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 export const CentralMoneyCharts = ({ data }) => {
   const { timelineData, members } = data;
   const [selectedMetric, setSelectedMetric] = useState('ยอดเก็บ');
+  const [popupData, setPopupData] = useState(null);
 
   const metricMap = {
     'ยอดเรียก': 'called',
@@ -67,60 +68,32 @@ export const CentralMoneyCharts = ({ data }) => {
     '#f97316',
   ];
 
-  const CustomTooltip = ({ active, payload, label }) => {
-    const [hidden, setHidden] = React.useState(false);
-
-    React.useEffect(() => {
-      setHidden(false);
-    }, [payload, label]);
-
-    React.useEffect(() => {
-      const handleClickOutside = (e) => {
-        if (!e.target.closest('.recharts-wrapper')) {
-          setHidden(true);
-        }
-      };
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    if (active && payload && payload.length && !hidden) {
-      const rowData = payload[0].payload;
-      return (
-        <div style={{ backgroundColor: 'var(--bg-card)', padding: '0.75rem 1rem', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)', maxWidth: '350px', position: 'relative' }}>
-          <button 
-            onClick={(e) => { e.stopPropagation(); setHidden(true); }}
-            style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.2rem', color: 'var(--text-secondary)', padding: '0 4px', lineHeight: '1', zIndex: 10 }}
-          >
-            &times;
-          </button>
-          <p style={{ fontWeight: '600', marginBottom: '0.5rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem', paddingRight: '1.5rem' }}>{label}</p>
-          {members.map(m => {
-            const mLine = payload.find(p => p.dataKey === m.name);
-            const mCalled = rowData[`${m.name}_called`];
-            const mCollected = rowData[`${m.name}_collected`];
-            const mOutstanding = rowData[`${m.name}_outstanding`];
-            
-            if (!mLine && mCalled === undefined && mCollected === undefined) return null;
-            
-            return (
-              <div key={m.name} style={{ marginBottom: '0.75rem', paddingBottom: '0.75rem', borderBottom: '1px dashed var(--border-color)' }}>
-                <p style={{ fontWeight: 'bold', color: mLine?.color || 'var(--text-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: mLine?.color || 'var(--text-primary)', display: 'inline-block' }}></span>
-                  {m.name}
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem', fontSize: '0.75rem', paddingLeft: '1rem' }}>
-                  {mCalled !== undefined && <div><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold' }}>■</span> ยอดเรียก: ฿{mCalled.toLocaleString()}</div>}
-                  {mCollected !== undefined && <div><span style={{ color: 'var(--accent-success)', fontWeight: 'bold' }}>■</span> ยอดเก็บ: ฿{mCollected.toLocaleString()}</div>}
-                  {mOutstanding !== undefined && <div><span style={{ color: 'var(--accent-danger)', fontWeight: 'bold' }}>■</span> ยอดค้าง: ฿{mOutstanding.toLocaleString()}</div>}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      );
+  // Popup Modal is handled at the bottom of the component
+  const handleChartClick = (e) => {
+    if (!e) return;
+    let label = '';
+    let rowData = null;
+    
+    if (e.activePayload && e.activePayload.length) {
+      label = e.activeLabel;
+      rowData = e.activePayload[0].payload;
+    } else if (e.activeTooltipIndex !== undefined && chartData[e.activeTooltipIndex]) {
+      label = chartData[e.activeTooltipIndex].name;
+      rowData = chartData[e.activeTooltipIndex];
+    } else if (e.payload) {
+      label = e.payload.name || e.name || '';
+      rowData = e.payload;
+    } else if (e.name) {
+      label = e.name;
+      rowData = e;
     }
-    return null;
+    
+    if (rowData) {
+      setPopupData({
+        label: label || rowData.name,
+        rowData: rowData
+      });
+    }
   };
 
   const CustomLegend = (props) => {
@@ -148,6 +121,7 @@ export const CentralMoneyCharts = ({ data }) => {
   };
 
   return (
+    <>
     <div className="bg-card animate-fade-in" style={{ position: 'relative', zIndex: 50, animationDelay: '0.6s', marginTop: 'var(--spacing-xl)', marginBottom: 'var(--spacing-xl)', padding: 'var(--spacing-lg)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-lg)', flexWrap: 'wrap', gap: '1rem' }}>
         <h2 style={{ fontSize: '1.25rem', fontWeight: '600', margin: 0 }}>กราฟภาพรวม (Combo Chart)</h2>
@@ -187,11 +161,12 @@ export const CentralMoneyCharts = ({ data }) => {
               left: 20,
               bottom: 5,
             }}
+            onClick={handleChartClick}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
             <XAxis dataKey="name" stroke="var(--text-secondary)" tick={{ fill: 'var(--text-secondary)' }} />
             <YAxis stroke="var(--text-secondary)" tick={{ fill: 'var(--text-secondary)' }} tickFormatter={(value) => `฿${value}`} />
-            <Tooltip trigger="click" content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.02)' }} wrapperStyle={{ zIndex: 9999, pointerEvents: 'auto' }} />
+            <Tooltip cursor={{ fill: 'rgba(0,0,0,0.04)' }} content={() => null} />
             <Legend content={<CustomLegend />} />
             
             {/* Grouped Stacked Bars for Members */}
@@ -204,6 +179,8 @@ export const CentralMoneyCharts = ({ data }) => {
                   stroke="none"
                   fillOpacity={0.9} 
                   legendType="none" 
+                  onClick={handleChartClick}
+                  style={{ cursor: 'pointer' }}
                 />
                 <Bar 
                   dataKey={`${member.name}_outstanding`} 
@@ -213,6 +190,8 @@ export const CentralMoneyCharts = ({ data }) => {
                   fillOpacity={0.9} 
                   legendType="none" 
                   radius={[4, 4, 0, 0]} 
+                  onClick={handleChartClick}
+                  style={{ cursor: 'pointer' }}
                 />
               </React.Fragment>
             ))}
@@ -224,11 +203,70 @@ export const CentralMoneyCharts = ({ data }) => {
               stroke="var(--accent-primary)" 
               strokeWidth={3}
               dot={{ r: 4, strokeWidth: 2 }}
-              activeDot={{ r: 6, strokeWidth: 0 }}
+              activeDot={{ r: 6, strokeWidth: 0, onClick: handleChartClick }}
+              onClick={handleChartClick}
+              style={{ cursor: 'pointer' }}
             />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
     </div>
+      
+      {/* Popup Modal */}
+      {popupData && (
+        <div 
+          style={{ position: 'fixed', inset: 0, zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }} 
+          onClick={() => setPopupData(null)}
+        >
+          <div 
+            style={{ backgroundColor: 'var(--bg-card)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-xl)', width: '90%', maxWidth: '450px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', animation: 'scaleIn 0.2s ease-out', border: '1px solid var(--border-color)' }} 
+            onClick={e => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setPopupData(null)}
+              style={{ position: 'absolute', top: '1.25rem', right: '1.25rem', background: 'var(--bg-main)', border: '1px solid var(--border-color)', borderRadius: '50%', cursor: 'pointer', fontSize: '1.25rem', color: 'var(--text-secondary)', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10, transition: 'all 0.2s' }}
+              onMouseOver={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--text-secondary)'; }}
+              onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
+            >
+              &times;
+            </button>
+            
+            <h3 style={{ fontSize: '1.35rem', fontWeight: '700', marginBottom: '1.25rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem', paddingRight: '2.5rem' }}>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CENTRAL MONEY (เงินกลาง)</div>
+              ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
+            </h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {members.map(m => {
+                const mCalled = popupData.rowData[`${m.name}_called`];
+                const mCollected = popupData.rowData[`${m.name}_collected`];
+                const mOutstanding = popupData.rowData[`${m.name}_outstanding`];
+                
+                if (mCalled === undefined && mCollected === undefined) return null;
+                
+                return (
+                  <div key={m.name} style={{ paddingBottom: '1rem', borderBottom: '1px dashed var(--border-color)' }}>
+                    <p style={{ fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem' }}>
+                      <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', display: 'inline-block' }}></span>
+                      {m.name}
+                    </p>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem', fontSize: '0.9rem', paddingLeft: '1.25rem' }}>
+                      {mCalled !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.5rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', marginBottom: '4px' }}>ยอดเรียก</span><span style={{fontWeight:'700', color:'var(--text-primary)'}}>฿{mCalled.toLocaleString()}</span></div>}
+                      {mCollected !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.5rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-success)', fontWeight: 'bold', display: 'block', marginBottom: '4px' }}>ยอดเก็บ</span><span style={{fontWeight:'700', color:'var(--text-primary)'}}>฿{mCollected.toLocaleString()}</span></div>}
+                      {mOutstanding !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.5rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-danger)', fontWeight: 'bold', display: 'block', marginBottom: '4px' }}>ยอดค้าง</span><span style={{fontWeight:'700', color:'var(--text-primary)'}}>฿{mOutstanding.toLocaleString()}</span></div>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
+              <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)' }}>ยอดรวม (เส้นแนวโน้ม):</span>
+              <span style={{ fontWeight: '800', fontSize: '1.25rem', color: 'var(--accent-primary)' }}>฿{popupData.rowData.totalTrend.toLocaleString()}</span>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
