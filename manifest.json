@@ -1,0 +1,17 @@
+{
+  "name": "Real Estate Dashboard",
+  "short_name": "Dashboard",
+  "description": "Financial and Real Estate Dashboard",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
