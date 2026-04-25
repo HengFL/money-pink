@@ -1,10 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import html2canvas from 'html2canvas';
+import { Camera } from 'lucide-react';
 
 export const Charts = ({ data }) => {
   const { timelineData, members } = data;
-  const [selectedMetric, setSelectedMetric] = useState('ยอดจ่าย');
+   const [selectedMetric, setSelectedMetric] = useState('ยอดจ่าย');
   const [popupData, setPopupData] = useState(null);
+  const popupRef = useRef(null);
+
+  const handleCapture = () => {
+    if (popupRef.current) {
+      // Temporarily hide buttons for capture
+      const buttons = popupRef.current.querySelectorAll('.no-capture');
+      buttons.forEach(btn => btn.style.display = 'none');
+
+      html2canvas(popupRef.current, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+        logging: false,
+        useCORS: true
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `real-estate-summary-${popupData.label}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        // Restore buttons
+        buttons.forEach(btn => btn.style.display = 'flex');
+      });
+    }
+  };
 
   const metricMap = {
     'ต้นทุน': 'cost',
@@ -217,22 +243,34 @@ export const Charts = ({ data }) => {
           style={{ position: 'fixed', inset: 0, zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }} 
           onClick={() => setPopupData(null)}
         >
-          <div 
+           <div 
+            ref={popupRef}
             style={{ backgroundColor: 'var(--bg-card)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-xl)', width: '90%', maxWidth: '450px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', animation: 'scaleIn 0.2s ease-out', border: '1px solid var(--border-color)' }} 
             onClick={e => e.stopPropagation()}
           >
-            <button 
-              onClick={() => setPopupData(null)}
-              style={{ position: 'absolute', top: '1.25rem', right: '1.25rem', background: 'var(--bg-main)', border: '1px solid var(--border-color)', borderRadius: '50%', cursor: 'pointer', fontSize: '1.25rem', color: 'var(--text-secondary)', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10, transition: 'all 0.2s' }}
-              onMouseOver={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--text-secondary)'; }}
-              onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
-            >
-              &times;
-            </button>
+            <div style={{ position: 'absolute', top: '1.25rem', right: '1.25rem', display: 'flex', gap: '0.5rem' }} className="no-capture">
+              <button 
+                onClick={handleCapture}
+                title="Capture Screenshot"
+                style={{ background: 'var(--bg-main)', border: '1px solid var(--border-color)', borderRadius: '50%', cursor: 'pointer', color: 'var(--text-secondary)', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                onMouseOver={(e) => { e.currentTarget.style.color = 'var(--accent-primary)'; e.currentTarget.style.borderColor = 'var(--accent-primary)'; }}
+                onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
+              >
+                <Camera size={18} />
+              </button>
+              <button 
+                onClick={() => setPopupData(null)}
+                style={{ background: 'var(--bg-main)', border: '1px solid var(--border-color)', borderRadius: '50%', cursor: 'pointer', fontSize: '1.25rem', color: 'var(--text-secondary)', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                onMouseOver={(e) => { e.currentTarget.style.color = 'var(--accent-danger)'; e.currentTarget.style.borderColor = 'var(--accent-danger)'; }}
+                onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
+              >
+                &times;
+              </button>
+            </div>
             
             <h3 style={{ fontSize: '1.35rem', fontWeight: '700', marginBottom: '1.25rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem', paddingRight: '2.5rem' }}>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>REAL ESTATE (อสังหาริมทรัพย์)</div>
-              ปี: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
+              ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
             </h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
