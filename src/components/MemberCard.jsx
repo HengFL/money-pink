@@ -50,6 +50,27 @@ export const MemberCard = ({ member, index }) => {
         </div>
       </div>
 
+      <div style={{ marginBottom: 'var(--spacing-md)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+          <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดจ่าย</span>
+          <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-success)' }}>
+            {totals.cost > 0 ? ((totals.paid / totals.cost) * 100).toFixed(1) : '0.0'}%
+          </span>
+        </div>
+        <div style={{ width: '100%', height: '10px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+          <div 
+            style={{ 
+              height: '100%', 
+              width: `${totals.cost > 0 ? Math.min(100, (totals.paid / totals.cost) * 100) : 0}%`, 
+              backgroundColor: 'var(--accent-success)',
+              backgroundImage: 'var(--gradient-success)',
+              borderRadius: 'var(--radius-full)',
+              transition: 'width 1s ease-in-out'
+            }} 
+          />
+        </div>
+      </div>
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-md">
         <div>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ต้นทุน</p>
