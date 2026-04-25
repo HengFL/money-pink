@@ -243,6 +243,28 @@ export const Charts = ({ data }) => {
                       <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', display: 'inline-block' }}></span>
                       {m.name}
                     </p>
+                    {mCost !== undefined && mCost > 0 && (
+                      <div style={{ paddingLeft: '1.25rem', marginBottom: '0.75rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดจ่าย</span>
+                          <span style={{ fontSize: '0.75rem', fontWeight: '600', color: 'var(--accent-success)' }}>
+                            {((mPaid / mCost) * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                        <div style={{ width: '100%', height: '8px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+                          <div 
+                            style={{ 
+                              height: '100%', 
+                              width: `${Math.min(100, Math.max(0, (mPaid / mCost) * 100))}%`, 
+                              backgroundColor: 'var(--accent-success)',
+                              backgroundImage: 'var(--gradient-success)',
+                              borderRadius: 'var(--radius-full)',
+                              transition: 'width 1s ease-in-out'
+                            }} 
+                          />
+                        </div>
+                      </div>
+                    )}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem', fontSize: '0.9rem', paddingLeft: '1.25rem' }}>
                       {mCost !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.5rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', marginBottom: '4px' }}>ต้นทุนรวม</span><span style={{fontWeight:'700', color:'var(--text-primary)'}}>฿{mCost.toLocaleString()}</span></div>}
                       {mPaid !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.5rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-success)', fontWeight: 'bold', display: 'block', marginBottom: '4px' }}>ยอดจ่าย</span><span style={{fontWeight:'700', color:'var(--text-primary)'}}>฿{mPaid.toLocaleString()}</span></div>}
