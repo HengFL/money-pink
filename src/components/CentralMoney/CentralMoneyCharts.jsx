@@ -44,6 +44,8 @@ export const CentralMoneyCharts = ({ data }) => {
        row[`${m.name}_called`] = runningTotals[m.name].called;
        row[`${m.name}_collected`] = runningTotals[m.name].collected;
        row[`${m.name}_outstanding`] = runningTotals[m.name].outstanding;
+       row[`${m.name}_borrowed`] = runningTotals[m.name].borrowed;
+       row[`${m.name}_returned`] = runningTotals[m.name].returned;
 
        let metricVal = 0;
        if (selectedMetricKey === 'all') {
@@ -233,7 +235,7 @@ export const CentralMoneyCharts = ({ data }) => {
             
             <h3 style={{ fontSize: '1.35rem', fontWeight: '700', marginBottom: '1.25rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem', paddingRight: '2.5rem' }}>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CENTRAL MONEY (เงินกลาง)</div>
-              ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
+              ปี: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
             </h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -241,8 +243,10 @@ export const CentralMoneyCharts = ({ data }) => {
                 const mCalled = popupData.rowData[`${m.name}_called`];
                 const mCollected = popupData.rowData[`${m.name}_collected`];
                 const mOutstanding = popupData.rowData[`${m.name}_outstanding`];
+                const mBorrowed = popupData.rowData[`${m.name}_borrowed`];
+                const mReturned = popupData.rowData[`${m.name}_returned`];
                 
-                if (mCalled === undefined && mCollected === undefined) return null;
+                if (mCalled === undefined && mCollected === undefined && mBorrowed === undefined) return null;
                 
                 return (
                   <div key={m.name} style={{ paddingBottom: '1rem', borderBottom: '1px dashed var(--border-color)' }}>
@@ -250,7 +254,7 @@ export const CentralMoneyCharts = ({ data }) => {
                       <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', display: 'inline-block' }}></span>
                       {m.name}
                     </p>
-                    {mCalled !== undefined && mCalled > 0 && (
+                    {mCalled !== undefined && mCalled > 0 && mCollected > 0 && (
                       <div style={{ paddingLeft: '1.25rem', marginBottom: '0.75rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
                           <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดเก็บ</span>
@@ -265,6 +269,28 @@ export const CentralMoneyCharts = ({ data }) => {
                               width: `${Math.min(100, Math.max(0, (mCollected / mCalled) * 100))}%`, 
                               backgroundColor: 'var(--accent-success)',
                               backgroundImage: 'var(--gradient-success)',
+                              borderRadius: 'var(--radius-full)',
+                              transition: 'width 1s ease-in-out'
+                            }} 
+                          />
+                        </div>
+                      </div>
+                    )}
+                    {mBorrowed !== undefined && mBorrowed > 0 && (
+                      <div style={{ paddingLeft: '1.25rem', marginBottom: '0.75rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดคืนเงิน</span>
+                          <span style={{ fontSize: '0.75rem', fontWeight: '600', color: 'var(--accent-primary)' }}>
+                            {((mReturned / mBorrowed) * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                        <div style={{ width: '100%', height: '8px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+                          <div 
+                            style={{ 
+                              height: '100%', 
+                              width: `${Math.min(100, Math.max(0, (mReturned / mBorrowed) * 100))}%`, 
+                              backgroundColor: 'var(--accent-primary)',
+                              backgroundImage: 'var(--gradient-primary)',
                               borderRadius: 'var(--radius-full)',
                               transition: 'width 1s ease-in-out'
                             }} 

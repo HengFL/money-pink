@@ -50,26 +50,51 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
         </div>
       </div>
 
-      <div style={{ marginBottom: 'var(--spacing-md)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
-          <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดเก็บ</span>
-          <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-success)' }}>
-            {totals.called > 0 ? ((totals.collected / totals.called) * 100).toFixed(1) : '0.0'}%
-          </span>
+      {totals.collected > 0 && (
+        <div style={{ marginBottom: 'var(--spacing-md)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+            <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดเก็บ</span>
+            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-success)' }}>
+              {totals.called > 0 ? ((totals.collected / totals.called) * 100).toFixed(1) : '0.0'}%
+            </span>
+          </div>
+          <div style={{ width: '100%', height: '10px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+            <div 
+              style={{ 
+                height: '100%', 
+                width: `${totals.called > 0 ? Math.min(100, (totals.collected / totals.called) * 100) : 0}%`, 
+                backgroundColor: 'var(--accent-success)',
+                backgroundImage: 'var(--gradient-success)',
+                borderRadius: 'var(--radius-full)',
+                transition: 'width 1s ease-in-out'
+              }} 
+            />
+          </div>
         </div>
-        <div style={{ width: '100%', height: '10px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
-          <div 
-            style={{ 
-              height: '100%', 
-              width: `${totals.called > 0 ? Math.min(100, (totals.collected / totals.called) * 100) : 0}%`, 
-              backgroundColor: 'var(--accent-success)',
-              backgroundImage: 'var(--gradient-success)',
-              borderRadius: 'var(--radius-full)',
-              transition: 'width 1s ease-in-out'
-            }} 
-          />
+      )}
+
+      {totals.borrowed > 0 && (
+        <div style={{ marginBottom: 'var(--spacing-md)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+            <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดคืนเงิน</span>
+            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-primary)' }}>
+              {((totals.returned / totals.borrowed) * 100).toFixed(1)}%
+            </span>
+          </div>
+          <div style={{ width: '100%', height: '10px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+            <div 
+              style={{ 
+                height: '100%', 
+                width: `${Math.min(100, Math.max(0, (totals.returned / totals.borrowed) * 100))}%`, 
+                backgroundColor: 'var(--accent-primary)',
+                backgroundImage: 'var(--gradient-primary)',
+                borderRadius: 'var(--radius-full)',
+                transition: 'width 1s ease-in-out'
+              }} 
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-md">
         <div>

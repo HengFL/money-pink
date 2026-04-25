@@ -10,6 +10,8 @@ export const Charts = ({ data }) => {
     'ต้นทุน': 'cost',
     'ยอดจ่าย': 'paid',
     'ค้างจ่าย': 'outstandingPay',
+    'รายได้': 'income',
+    'ยอดรับ': 'received',
     'ค้างรับ': 'outstandingReceive',
     'ทั้งหมด': 'all'
   };
@@ -18,7 +20,7 @@ export const Charts = ({ data }) => {
 
   const runningTotals = {};
   members.forEach(m => {
-    runningTotals[m.name] = { cost: 0, paid: 0, outstandingPay: 0, outstandingReceive: 0 };
+    runningTotals[m.name] = { cost: 0, paid: 0, outstandingPay: 0, outstandingReceive: 0, income: 0, received: 0 };
   });
 
   const chartData = timelineData.map(item => {
@@ -32,6 +34,8 @@ export const Charts = ({ data }) => {
          runningTotals[m.name].paid += (item[m.name].paid || 0);
          runningTotals[m.name].outstandingPay += (item[m.name].outstandingPay || 0);
          runningTotals[m.name].outstandingReceive += (item[m.name].outstandingReceive || 0);
+         runningTotals[m.name].income += (item[m.name].income || 0);
+         runningTotals[m.name].received += (item[m.name].received || 0);
        }
        
        // Stacked Bar values for this member
@@ -44,7 +48,7 @@ export const Charts = ({ data }) => {
 
        let metricVal = 0;
        if (selectedMetricKey === 'all') {
-         metricVal = runningTotals[m.name].cost + runningTotals[m.name].paid + runningTotals[m.name].outstandingPay + runningTotals[m.name].outstandingReceive;
+         metricVal = runningTotals[m.name].cost + runningTotals[m.name].paid + runningTotals[m.name].outstandingPay + runningTotals[m.name].outstandingReceive + runningTotals[m.name].income + runningTotals[m.name].received;
        } else {
          metricVal = runningTotals[m.name][selectedMetricKey];
        }
@@ -139,6 +143,8 @@ export const Charts = ({ data }) => {
             <option value="ทั้งหมด" style={{ color: '#000' }}>ทั้งหมด</option>
             <option value="ต้นทุน" style={{ color: '#000' }}>ต้นทุน</option>
             <option value="ยอดจ่าย" style={{ color: '#000' }}>ยอดจ่าย</option>
+            <option value="รายได้" style={{ color: '#000' }}>รายได้</option>
+            <option value="ยอดรับ" style={{ color: '#000' }}>ยอดรับ</option>
             <option value="ค้างจ่าย" style={{ color: '#000' }}>ค้างจ่าย</option>
             <option value="ค้างรับ" style={{ color: '#000' }}>ค้างรับ</option>
           </select>
@@ -226,7 +232,7 @@ export const Charts = ({ data }) => {
             
             <h3 style={{ fontSize: '1.35rem', fontWeight: '700', marginBottom: '1.25rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem', paddingRight: '2.5rem' }}>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>REAL ESTATE (อสังหาริมทรัพย์)</div>
-              ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
+              ปี: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
             </h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
