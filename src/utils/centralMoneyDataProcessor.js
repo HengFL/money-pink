@@ -83,7 +83,7 @@ export const processCentralMoneyData = (rawData, selectedYear = 'All') => {
 
     memberData.transactions.push(item);
 
-    let dateStr = item['วันที่ทำ'] || item['วันที่สรุป'];
+    let dateStr = item['วันที่สรุป'] || item['วันที่ทำ'];
     let monthKey = '';
     let yearKey = String(item['source_year'] || new Date().getFullYear());
 
