@@ -8,6 +8,20 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', padding: '0 1.5rem', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+      <header style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <h1 style={{ 
+          fontSize: '2.5rem', 
+          fontWeight: '800', 
+          background: 'linear-gradient(to right, #f472b6, #db2777)', 
+          WebkitBackgroundClip: 'text', 
+          WebkitTextFillColor: 'transparent',
+          margin: 0,
+          letterSpacing: '-0.025em'
+        }}>
+          Money Pink
+        </h1>
+      </header>
+
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem', gap: '1rem', flexWrap: 'wrap' }}>
         <button 
           onClick={() => setActiveTab('real-estate')}

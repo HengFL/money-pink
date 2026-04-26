@@ -9,10 +9,9 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
   return (
     <div style={{ padding: 'var(--spacing-lg) 0', maxWidth: '1200px', margin: '0 auto' }}>
       <header style={{ marginBottom: 'var(--spacing-lg)', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: '700', marginBottom: 'var(--spacing-xs)', background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: '700', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
           CENTRAL MONEY (เงินกลาง)
         </h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-md)' }}>Summary (สรุปยอด)</p>
         
         <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           {availableYears.length > 0 && (
@@ -65,7 +64,7 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
         </div>
       </header>
 
-      <CentralMoneySummaryCards totals={totals} />
+
       
       <CentralMoneyCharts data={data} />
 
