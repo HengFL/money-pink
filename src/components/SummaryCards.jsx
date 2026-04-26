@@ -4,7 +4,7 @@ import { Wallet, TrendingUp, AlertCircle, Banknote, CreditCard, PiggyBank } from
 
 export const SummaryCards = ({ totals }) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-md" style={{ marginBottom: 'var(--spacing-xl)' }}>
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-md" style={{ marginBottom: 'var(--spacing-lg)' }}>
       {/* ต้นทุนรวม (Total Cost) */}
       <div className="bg-card animate-fade-in" style={{ animationDelay: '0.1s' }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>

@@ -6,7 +6,7 @@ export const CentralMoneySummaryCards = ({ totals }) => {
   const balance = (totals.collected + totals.returned) - (totals.withdrawn + totals.borrowed);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-md" style={{ marginBottom: 'var(--spacing-xl)' }}>
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-md" style={{ marginBottom: 'var(--spacing-lg)' }}>
       {/* ยอดคงเหลือทั้งหมด (Total Balance) */}
       <div className="bg-card animate-fade-in col-span-2 md:col-span-2 lg:col-span-4" style={{ animationDelay: '0.05s', border: '2px solid var(--accent-primary)', background: 'linear-gradient(to right, rgba(59, 130, 246, 0.05), transparent)' }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>

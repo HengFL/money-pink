@@ -7,8 +7,8 @@ function App() {
   const [activeTab, setActiveTab] = useState('real-estate');
 
   return (
-    <div style={{ minHeight: '100vh', padding: '0 1.5rem', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column' }}>
-      <header style={{ textAlign: 'center', marginBottom: '2rem' }}>
+    <div style={{ minHeight: '100vh', padding: '0 0.75rem', paddingTop: '0.75rem', display: 'flex', flexDirection: 'column' }}>
+      <header style={{ textAlign: 'center', marginBottom: '1rem' }}>
         <h1 style={{ 
           fontSize: '2.5rem', 
           fontWeight: '800', 
@@ -22,7 +22,7 @@ function App() {
         </h1>
       </header>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem', gap: '1rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', gap: '0.75rem', flexWrap: 'wrap' }}>
         <button 
           onClick={() => setActiveTab('real-estate')}
           style={{ 
@@ -66,7 +66,7 @@ function App() {
         <CentralMoneyView />
       </div>
       
-      <footer style={{ marginTop: 'auto', paddingTop: '2rem', paddingBottom: '1.5rem', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.9rem', borderTop: '1px solid var(--border-color)', letterSpacing: '0.5px' }}>
+      <footer style={{ marginTop: 'auto', paddingTop: '1rem', paddingBottom: '1rem', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.8rem', borderTop: '1px solid var(--border-color)', letterSpacing: '0.5px' }}>
         <div>HengFL &copy; 2026</div>
       </footer>
       

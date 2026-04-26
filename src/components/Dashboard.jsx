@@ -7,8 +7,8 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
   const { totals, members } = data;
 
   return (
-    <div style={{ padding: 'var(--spacing-lg) 0', maxWidth: '1200px', margin: '0 auto' }}>
-      <header style={{ marginBottom: 'var(--spacing-lg)', textAlign: 'center' }}>
+    <div style={{ padding: 'var(--spacing-md) 0', maxWidth: '1200px', margin: '0 auto' }}>
+      <header style={{ marginBottom: 'var(--spacing-md)', textAlign: 'center' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-info)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
           REAL ESTATE (อสังหาริมทรัพย์)
         </h1>
@@ -64,7 +64,7 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
         </div>
       </header>
 
-
+      <SummaryCards totals={totals} />
       
       <Charts data={data} />
 
