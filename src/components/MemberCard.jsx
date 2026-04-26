@@ -33,9 +33,9 @@ export const MemberCard = ({ member, index }) => {
       <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center" style={{ marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-sm)', borderBottom: '1px solid var(--border-color)', gap: 'var(--spacing-sm)' }}>
         <div className="flex items-center gap-sm">
           <div style={{ padding: '0.5rem', backgroundColor: 'var(--bg-secondary)', borderRadius: 'var(--radius-full)' }}>
-            <User size={20} style={{ color: 'var(--text-secondary)' }} />
+            <User size={20} style={{ color: 'var(--accent-primary)' }} />
           </div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--text-primary)' }}>{name}</h2>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--accent-primary)' }}>{name}</h2>
         </div>
         
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', width: '100%' }} className="md:justify-end">
@@ -91,7 +91,7 @@ export const MemberCard = ({ member, index }) => {
       </div>
       
       {totals.outstandingPay > 0 && (
-        <div style={{ marginTop: 'var(--spacing-md)', paddingTop: 'var(--spacing-sm)', borderTop: '1px dashed rgba(239, 68, 68, 0.3)' }}>
+        <div style={{ marginTop: 'var(--spacing-md)', paddingTop: 'var(--spacing-sm)', borderTop: '1px dashed var(--border-color)' }}>
            <p style={{ color: 'var(--accent-danger)', fontSize: '0.875rem', fontWeight: '500', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <AlertTriangle size={16} />
             ยอดค้างจ่าย: {formatCurrency(totals.outstandingPay)}

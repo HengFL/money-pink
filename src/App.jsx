@@ -28,11 +28,12 @@ function App() {
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.5rem',
             padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-full)', fontWeight: '600', 
-            backgroundColor: activeTab === 'real-estate' ? 'var(--accent-primary)' : 'var(--bg-card)', 
-            color: activeTab === 'real-estate' ? '#fff' : 'var(--text-primary)', 
-            border: '1px solid var(--border-color)', cursor: 'pointer',
+            backgroundColor: activeTab === 'real-estate' ? '#fff' : 'var(--bg-card)', 
+            color: activeTab === 'real-estate' ? 'var(--accent-info)' : 'var(--text-primary)', 
+            border: activeTab === 'real-estate' ? '2px solid var(--accent-info)' : '1px solid var(--border-color)', 
+            cursor: 'pointer',
             transition: 'all 0.2s ease',
-            boxShadow: activeTab === 'real-estate' ? '0 4px 6px -1px rgba(59, 130, 246, 0.5)' : 'none'
+            boxShadow: activeTab === 'real-estate' ? '0 0 10px rgba(59, 130, 246, 0.2)' : 'none'
           }}
         >
           <Home size={18} />
@@ -43,11 +44,12 @@ function App() {
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.5rem',
             padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-full)', fontWeight: '600', 
-            backgroundColor: activeTab === 'central-money' ? 'var(--accent-success)' : 'var(--bg-card)', 
-            color: activeTab === 'central-money' ? '#fff' : 'var(--text-primary)', 
-            border: '1px solid var(--border-color)', cursor: 'pointer',
+            backgroundColor: activeTab === 'central-money' ? '#fff' : 'var(--bg-card)', 
+            color: activeTab === 'central-money' ? 'var(--accent-success)' : 'var(--text-primary)', 
+            border: activeTab === 'central-money' ? '2px solid var(--accent-success)' : '1px solid var(--border-color)', 
+            cursor: 'pointer',
             transition: 'all 0.2s ease',
-            boxShadow: activeTab === 'central-money' ? '0 4px 6px -1px rgba(16, 185, 129, 0.5)' : 'none'
+            boxShadow: activeTab === 'central-money' ? '0 0 10px rgba(16, 185, 129, 0.2)' : 'none'
           }}
         >
           <Landmark size={18} />

@@ -9,7 +9,7 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
   return (
     <div style={{ padding: 'var(--spacing-lg) 0', maxWidth: '1200px', margin: '0 auto' }}>
       <header style={{ marginBottom: 'var(--spacing-lg)', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: '700', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-success)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
           CENTRAL MONEY (เงินกลาง)
         </h1>
         
@@ -69,7 +69,7 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
       <CentralMoneyCharts data={data} />
 
       <div>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: 'var(--spacing-md)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: 'var(--spacing-md)', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-success)' }}>
           รายละเอียดสมาชิก
           <span style={{ fontSize: '0.875rem', fontWeight: 'normal', backgroundColor: 'var(--bg-hover)', padding: '0.2rem 0.6rem', borderRadius: 'var(--radius-full)', color: 'var(--text-secondary)' }}>
             {members.length} ท่าน

@@ -33,9 +33,9 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
       <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center" style={{ marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-sm)', borderBottom: '1px solid var(--border-color)', gap: 'var(--spacing-sm)' }}>
         <div className="flex items-center gap-sm">
           <div style={{ padding: '0.5rem', backgroundColor: 'var(--bg-secondary)', borderRadius: 'var(--radius-full)' }}>
-            <User size={20} style={{ color: 'var(--text-secondary)' }} />
+            <User size={20} style={{ color: 'var(--accent-primary)' }} />
           </div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--text-primary)' }}>{name}</h2>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--accent-primary)' }}>{name}</h2>
         </div>
         
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', width: '100%' }} className="md:justify-end">
@@ -77,7 +77,7 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
         <div style={{ marginBottom: 'var(--spacing-md)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
             <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดคืนเงิน</span>
-            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-primary)' }}>
+            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-info)' }}>
               {((totals.returned / totals.borrowed) * 100).toFixed(1)}%
             </span>
           </div>
@@ -86,8 +86,8 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
               style={{ 
                 height: '100%', 
                 width: `${Math.min(100, Math.max(0, (totals.returned / totals.borrowed) * 100))}%`, 
-                backgroundColor: 'var(--accent-primary)',
-                backgroundImage: 'var(--gradient-primary)',
+                backgroundColor: 'var(--accent-info)',
+                backgroundImage: 'var(--gradient-info)',
                 borderRadius: 'var(--radius-full)',
                 transition: 'width 1s ease-in-out'
               }} 

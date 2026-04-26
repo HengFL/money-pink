@@ -89,12 +89,12 @@ export const CentralMoneyCharts = ({ data }) => {
   });
 
   const memberColors = [
-    '#22c55e',
-    '#eab308',
-    '#ec4899',
-    '#0ea5e9',
-    '#a855f7',
-    '#f97316',
+    '#db2777', // Pink (Brand)
+    '#10b981', // Green
+    '#f59e0b', // Yellow
+    '#3b82f6', // Blue
+    '#8b5cf6', // Purple
+    '#f97316', // Orange
   ];
 
   // Popup Modal is handled at the bottom of the component
@@ -153,7 +153,7 @@ export const CentralMoneyCharts = ({ data }) => {
     <>
     <div className="bg-card animate-fade-in" style={{ position: 'relative', zIndex: 50, animationDelay: '0.6s', marginTop: 'var(--spacing-xl)', marginBottom: 'var(--spacing-xl)', padding: 'var(--spacing-lg)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-lg)', flexWrap: 'wrap', gap: '1rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', margin: 0 }}>กราฟภาพรวม (Combo Chart)</h2>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', margin: 0, color: 'var(--accent-success)' }}>กราฟภาพรวม (Combo Chart)</h2>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-main)', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-full)', border: '1px solid var(--border-color)' }}>
           <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>เส้นแนวโน้ม:</span>
           <select 
@@ -273,7 +273,7 @@ export const CentralMoneyCharts = ({ data }) => {
             </div>
             
             <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.5rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.35rem', paddingRight: '2.5rem' }}>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.05rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CENTRAL MONEY (เงินกลาง)</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--accent-success)', fontWeight: '600', marginBottom: '0.05rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CENTRAL MONEY (เงินกลาง)</div>
               ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
             </h3>
             
@@ -289,7 +289,7 @@ export const CentralMoneyCharts = ({ data }) => {
                 
                 return (
                   <div key={m.name} style={{ paddingBottom: '0.4rem', borderBottom: '1px dashed var(--border-color)' }}>
-                    <p style={{ fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
+                    <p style={{ fontWeight: '700', color: 'var(--accent-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', display: 'inline-block' }}></span>
                       {m.name}
                     </p>
@@ -319,7 +319,7 @@ export const CentralMoneyCharts = ({ data }) => {
                       <div style={{ paddingLeft: '0.75rem', marginBottom: '0.35rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1px' }}>
                           <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดคืนเงิน</span>
-                          <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--accent-primary)' }}>
+                          <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--accent-info)' }}>
                             {((mReturned / mBorrowed) * 100).toFixed(1)}%
                           </span>
                         </div>
@@ -328,8 +328,8 @@ export const CentralMoneyCharts = ({ data }) => {
                             style={{ 
                               height: '100%', 
                               width: `${Math.min(100, Math.max(0, (mReturned / mBorrowed) * 100))}%`, 
-                              backgroundColor: 'var(--accent-primary)',
-                              backgroundImage: 'var(--gradient-primary)',
+                              backgroundColor: 'var(--accent-info)',
+                              backgroundImage: 'var(--gradient-info)',
                               borderRadius: 'var(--radius-full)',
                               transition: 'width 1s ease-in-out'
                             }} 
