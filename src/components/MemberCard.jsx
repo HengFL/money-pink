@@ -85,8 +85,8 @@ export const MemberCard = ({ member, index }) => {
           <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-warning)' }}>{formatCurrency(totals.income)}</p>
         </div>
         <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ค้างรับ</p>
-          <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-secondary)' }}>{formatCurrency(totals.outstandingReceive)}</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ยอดรับ</p>
+          <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-secondary)' }}>{formatCurrency(totals.received)}</p>
         </div>
       </div>
       

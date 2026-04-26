@@ -5,7 +5,7 @@ import { Camera } from 'lucide-react';
 
 export const CentralMoneyCharts = ({ data }) => {
   const { timelineData, members } = data;
-   const [selectedMetric, setSelectedMetric] = useState('ยอดเก็บ');
+   const [selectedMetric, setSelectedMetric] = useState('ยอดเรียก');
   const [popupData, setPopupData] = useState(null);
   const popupRef = useRef(null);
 
@@ -72,6 +72,7 @@ export const CentralMoneyCharts = ({ data }) => {
        row[`${m.name}_outstanding`] = runningTotals[m.name].outstanding;
        row[`${m.name}_borrowed`] = runningTotals[m.name].borrowed;
        row[`${m.name}_returned`] = runningTotals[m.name].returned;
+       row[`${m.name}_outstandingReturn`] = runningTotals[m.name].outstandingReturn;
 
        let metricVal = 0;
        if (selectedMetricKey === 'all') {
@@ -248,7 +249,7 @@ export const CentralMoneyCharts = ({ data }) => {
         >
            <div 
             ref={popupRef}
-            style={{ backgroundColor: 'var(--bg-card)', padding: '0.85rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-xl)', width: '95%', maxWidth: '420px', maxHeight: '92vh', overflowY: 'auto', position: 'relative', animation: 'scaleIn 0.2s ease-out', border: '1px solid var(--border-color)' }} 
+            style={{ backgroundColor: 'var(--bg-card)', padding: '0.7rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-xl)', width: '95%', maxWidth: '420px', maxHeight: '92vh', overflowY: 'auto', position: 'relative', animation: 'scaleIn 0.2s ease-out', border: '1px solid var(--border-color)' }} 
             onClick={e => e.stopPropagation()}
           >
             <div style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', display: 'flex', gap: '0.4rem' }} className="no-capture">
@@ -271,12 +272,12 @@ export const CentralMoneyCharts = ({ data }) => {
               </button>
             </div>
             
-            <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.65rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.4rem', paddingRight: '2.5rem' }}>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.1rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CENTRAL MONEY (เงินกลาง)</div>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.5rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.35rem', paddingRight: '2.5rem' }}>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.05rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CENTRAL MONEY (เงินกลาง)</div>
               ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
             </h3>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               {members.map(m => {
                 const mCalled = popupData.rowData[`${m.name}_called`];
                 const mCollected = popupData.rowData[`${m.name}_collected`];
@@ -287,8 +288,8 @@ export const CentralMoneyCharts = ({ data }) => {
                 if (mCalled === undefined && mCollected === undefined && mBorrowed === undefined) return null;
                 
                 return (
-                  <div key={m.name} style={{ paddingBottom: '0.5rem', borderBottom: '1px dashed var(--border-color)' }}>
-                    <p style={{ fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
+                  <div key={m.name} style={{ paddingBottom: '0.4rem', borderBottom: '1px dashed var(--border-color)' }}>
+                    <p style={{ fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', display: 'inline-block' }}></span>
                       {m.name}
                     </p>
@@ -336,17 +337,33 @@ export const CentralMoneyCharts = ({ data }) => {
                         </div>
                       </div>
                     )}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.35rem', fontSize: '0.8rem', paddingLeft: '0.75rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.35rem', fontSize: '0.8rem', paddingLeft: '0.75rem', marginBottom: '0.25rem' }}>
                       {mCalled !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดเรียก</span><span style={{fontWeight:'700', color:'var(--text-secondary)'}}>฿{mCalled.toLocaleString()}</span></div>}
                       {mCollected !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-success)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดเก็บ</span><span style={{fontWeight:'700', color:'var(--accent-success)'}}>฿{mCollected.toLocaleString()}</span></div>}
                       {mOutstanding !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-danger)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดค้าง</span><span style={{fontWeight:'700', color:'var(--accent-danger)'}}>฿{mOutstanding.toLocaleString()}</span></div>}
                     </div>
+                    {(mBorrowed > 0 || mReturned > 0) && (
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.35rem', fontSize: '0.8rem', paddingLeft: '0.75rem' }}>
+                        <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}>
+                          <span style={{ color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดยืม</span>
+                          <span style={{fontWeight:'700', color:'var(--accent-secondary)'}}>฿{mBorrowed.toLocaleString()}</span>
+                        </div>
+                        <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}>
+                          <span style={{ color: 'var(--accent-success)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดคืน</span>
+                          <span style={{fontWeight:'700', color:'var(--accent-success)'}}>฿{mReturned.toLocaleString()}</span>
+                        </div>
+                        <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}>
+                          <span style={{ color: 'var(--accent-danger)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดค้างคืน</span>
+                          <span style={{fontWeight:'700', color:'var(--accent-danger)'}}>฿{(popupData.rowData[`${m.name}_outstandingReturn`] || 0).toLocaleString()}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
             </div>
             
-            <div style={{ marginTop: '0.65rem', paddingTop: '0.65rem', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-main)', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-main)', padding: '0.4rem 0.7rem', borderRadius: 'var(--radius-md)' }}>
               <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>ยอดรวม (เส้นแนวโน้ม):</span>
               <span style={{ fontWeight: '800', fontSize: '1.1rem', color: 'var(--accent-primary)' }}>฿{popupData.rowData.totalTrend.toLocaleString()}</span>
             </div>

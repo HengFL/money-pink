@@ -5,7 +5,7 @@ import { Camera } from 'lucide-react';
 
 export const Charts = ({ data }) => {
   const { timelineData, members } = data;
-   const [selectedMetric, setSelectedMetric] = useState('ยอดจ่าย');
+   const [selectedMetric, setSelectedMetric] = useState('ต้นทุน');
   const [popupData, setPopupData] = useState(null);
   const popupRef = useRef(null);
 
@@ -245,7 +245,7 @@ export const Charts = ({ data }) => {
         >
            <div 
             ref={popupRef}
-            style={{ backgroundColor: 'var(--bg-card)', padding: '0.85rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-xl)', width: '95%', maxWidth: '420px', maxHeight: '92vh', overflowY: 'auto', position: 'relative', animation: 'scaleIn 0.2s ease-out', border: '1px solid var(--border-color)' }} 
+            style={{ backgroundColor: 'var(--bg-card)', padding: '0.7rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-xl)', width: '95%', maxWidth: '420px', maxHeight: '92vh', overflowY: 'auto', position: 'relative', animation: 'scaleIn 0.2s ease-out', border: '1px solid var(--border-color)' }} 
             onClick={e => e.stopPropagation()}
           >
             <div style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', display: 'flex', gap: '0.4rem' }} className="no-capture">
@@ -268,12 +268,12 @@ export const Charts = ({ data }) => {
               </button>
             </div>
             
-            <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.65rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.4rem', paddingRight: '2.5rem' }}>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.1rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>REAL ESTATE (อสังหาริมทรัพย์)</div>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.5rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.35rem', paddingRight: '2.5rem' }}>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.05rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>REAL ESTATE (อสังหาริมทรัพย์)</div>
               ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)' }}>{popupData.label}</span>
             </h3>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               {members.map(m => {
                 const mCost = popupData.rowData[`${m.name}_cost`];
                 const mPaid = popupData.rowData[`${m.name}_paid`];
@@ -282,13 +282,13 @@ export const Charts = ({ data }) => {
                 if (mCost === undefined && mPaid === undefined) return null;
                 
                 return (
-                  <div key={m.name} style={{ paddingBottom: '0.5rem', borderBottom: '1px dashed var(--border-color)' }}>
-                    <p style={{ fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
+                  <div key={m.name} style={{ paddingBottom: '0.4rem', borderBottom: '1px dashed var(--border-color)' }}>
+                    <p style={{ fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', display: 'inline-block' }}></span>
                       {m.name}
                     </p>
                     {mCost !== undefined && mCost > 0 && mPaid > 0 && (
-                      <div style={{ paddingLeft: '0.75rem', marginBottom: '0.35rem' }}>
+                      <div style={{ paddingLeft: '0.75rem', marginBottom: '0.25rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1px' }}>
                           <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดจ่าย</span>
                           <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--accent-success)' }}>
@@ -319,7 +319,7 @@ export const Charts = ({ data }) => {
               })}
             </div>
             
-            <div style={{ marginTop: '0.65rem', paddingTop: '0.65rem', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-main)', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-main)', padding: '0.4rem 0.7rem', borderRadius: 'var(--radius-md)' }}>
               <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>ยอดรวม (เส้นแนวโน้ม):</span>
               <span style={{ fontWeight: '800', fontSize: '1.1rem', color: 'var(--accent-primary)' }}>฿{popupData.rowData.totalTrend.toLocaleString()}</span>
             </div>
