@@ -150,7 +150,7 @@ export const Charts = ({ data }) => {
     <>
     <div className="bg-card animate-fade-in" style={{ position: 'relative', zIndex: 50, animationDelay: '0.6s', marginTop: 'var(--spacing-xl)', marginBottom: 'var(--spacing-xl)', padding: 'var(--spacing-lg)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-lg)', flexWrap: 'wrap', gap: '1rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', margin: 0, color: 'var(--accent-info)' }}>กราฟภาพรวม (Combo Chart)</h2>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', margin: 0, color: 'var(--text-primary)' }}>กราฟภาพรวม (Combo Chart)</h2>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-main)', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-full)', border: '1px solid var(--border-color)' }}>
           <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>เส้นแนวโน้ม:</span>
           <select 
@@ -245,7 +245,7 @@ export const Charts = ({ data }) => {
         >
            <div 
             ref={popupRef}
-            style={{ backgroundColor: 'var(--bg-card)', padding: '0.7rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-xl)', width: '95%', maxWidth: '420px', maxHeight: '92vh', overflowY: 'auto', position: 'relative', animation: 'scaleIn 0.2s ease-out', border: '1px solid var(--border-color)' }} 
+            style={{ backgroundColor: '#f1f5f9', padding: '0.7rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-xl)', width: '95%', maxWidth: '420px', maxHeight: '92vh', overflowY: 'auto', position: 'relative', animation: 'scaleIn 0.2s ease-out', border: '1px solid var(--border-color)' }} 
             onClick={e => e.stopPropagation()}
           >
             <div style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', display: 'flex', gap: '0.4rem' }} className="no-capture">
@@ -283,8 +283,8 @@ export const Charts = ({ data }) => {
                 
                 return (
                   <div key={m.name} style={{ paddingBottom: '0.4rem', borderBottom: '1px dashed var(--border-color)' }}>
-                    <p style={{ fontWeight: '700', color: 'var(--accent-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', display: 'inline-block' }}></span>
+                    <p style={{ fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--text-primary)', display: 'inline-block' }}></span>
                       {m.name}
                     </p>
                     {mCost !== undefined && mCost > 0 && mPaid > 0 && (
@@ -295,7 +295,7 @@ export const Charts = ({ data }) => {
                             {((mPaid / mCost) * 100).toFixed(1)}%
                           </span>
                         </div>
-                        <div style={{ width: '100%', height: '5px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+                        <div style={{ width: '100%', height: '5px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
                           <div 
                             style={{ 
                               height: '100%', 
@@ -309,17 +309,19 @@ export const Charts = ({ data }) => {
                         </div>
                       </div>
                     )}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.35rem', fontSize: '0.8rem', paddingLeft: '0.75rem' }}>
-                      {mCost !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ต้นทุนรวม</span><span style={{fontWeight:'700', color:'var(--text-secondary)'}}>฿{mCost.toLocaleString()}</span></div>}
-                      {mPaid !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-success)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดจ่าย</span><span style={{fontWeight:'700', color:'var(--accent-success)'}}>฿{mPaid.toLocaleString()}</span></div>}
-                      {mCalcUnpaid !== undefined && <div style={{ background: 'var(--bg-main)', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-danger)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ค้างจ่าย</span><span style={{fontWeight:'700', color:'var(--accent-danger)'}}>฿{mCalcUnpaid.toLocaleString()}</span></div>}
-                    </div>
+                    {mCost > 0 && (
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.35rem', fontSize: '0.8rem', paddingLeft: '0.75rem' }}>
+                        <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ต้นทุนรวม</span><span style={{fontWeight:'700', color:'var(--text-secondary)'}}>฿{mCost.toLocaleString()}</span></div>
+                        {mPaid !== undefined && <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-success)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดจ่าย</span><span style={{fontWeight:'700', color:'var(--accent-success)'}}>฿{mPaid.toLocaleString()}</span></div>}
+                        {mCalcUnpaid !== undefined && <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: mCalcUnpaid === 0 ? '#94a3b8' : 'var(--accent-danger)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ค้างจ่าย</span><span style={{fontWeight:'700', color: mCalcUnpaid === 0 ? '#94a3b8' : 'var(--accent-danger)'}}>฿{mCalcUnpaid.toLocaleString()}</span></div>}
+                      </div>
+                    )}
                   </div>
                 );
               })}
             </div>
             
-            <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-main)', padding: '0.4rem 0.7rem', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f1f5f9', padding: '0.4rem 0.7rem', borderRadius: 'var(--radius-md)' }}>
               <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>ยอดรวม (เส้นแนวโน้ม):</span>
               <span style={{ fontWeight: '800', fontSize: '1.1rem', color: 'var(--accent-primary)' }}>฿{popupData.rowData.totalTrend.toLocaleString()}</span>
             </div>

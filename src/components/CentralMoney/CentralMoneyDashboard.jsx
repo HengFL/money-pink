@@ -69,7 +69,7 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
       <CentralMoneyCharts data={data} />
 
       <div>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: 'var(--spacing-md)', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-success)' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: 'var(--spacing-md)', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-primary)' }}>
           รายละเอียดสมาชิก
           <span style={{ fontSize: '0.875rem', fontWeight: 'normal', backgroundColor: 'var(--bg-hover)', padding: '0.2rem 0.6rem', borderRadius: 'var(--radius-full)', color: 'var(--text-secondary)' }}>
             {members.length} ท่าน

@@ -5,48 +5,16 @@ import { User, CheckCircle, AlertTriangle, HelpCircle } from 'lucide-react';
 export const CentralMoneyMemberCard = ({ member, index }) => {
   const { name, totals, statuses } = member;
 
-  const StatusBadge = ({ count, label, type }) => {
-    if (count === 0) return null;
-    let badgeClass = 'badge ';
-    let Icon = HelpCircle;
-    
-    if (type === 'success') {
-      badgeClass += 'badge-success';
-      Icon = CheckCircle;
-    } else if (type === 'danger') {
-      badgeClass += 'badge-danger';
-      Icon = AlertTriangle;
-    } else {
-      badgeClass += 'badge-warning';
-    }
 
-    return (
-      <div className={badgeClass} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginRight: '0.5rem', marginBottom: '0.5rem' }}>
-        <Icon size={14} />
-        <span>{label}: {count}</span>
-      </div>
-    );
-  };
 
   return (
     <div className="bg-card animate-fade-in" style={{ animationDelay: `${0.1 * (index + 1)}s`, marginBottom: 'var(--spacing-md)' }}>
       <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center" style={{ marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-sm)', borderBottom: '1px solid var(--border-color)', gap: 'var(--spacing-sm)' }}>
         <div className="flex items-center gap-sm">
           <div style={{ padding: '0.5rem', backgroundColor: 'var(--bg-secondary)', borderRadius: 'var(--radius-full)' }}>
-            <User size={20} style={{ color: 'var(--accent-primary)' }} />
+            <User size={20} style={{ color: 'var(--text-primary)' }} />
           </div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--accent-primary)' }}>{name}</h2>
-        </div>
-        
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', width: '100%' }} className="md:justify-end">
-          <StatusBadge count={statuses['จ่ายแล้ว']} label="จ่ายแล้ว" type="success" />
-          <StatusBadge count={statuses['ค้างจ่าย']} label="ค้างจ่าย" type="danger" />
-          {Object.entries(statuses).map(([key, count]) => {
-            if (key !== 'จ่ายแล้ว' && key !== 'ค้างจ่าย' && key !== 'อื่นๆ' && count > 0) {
-              return <StatusBadge key={key} count={count} label={key} type="warning" />;
-            }
-            return null;
-          })}
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--text-primary)' }}>{name}</h2>
         </div>
       </div>
 
@@ -58,7 +26,7 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
               {totals.called > 0 ? ((totals.collected / totals.called) * 100).toFixed(1) : '0.0'}%
             </span>
           </div>
-          <div style={{ width: '100%', height: '10px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+          <div style={{ width: '100%', height: '10px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
             <div 
               style={{ 
                 height: '100%', 
@@ -81,7 +49,7 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
               {((totals.returned / totals.borrowed) * 100).toFixed(1)}%
             </span>
           </div>
-          <div style={{ width: '100%', height: '10px', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+          <div style={{ width: '100%', height: '10px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
             <div 
               style={{ 
                 height: '100%', 
@@ -96,27 +64,37 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
         </div>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-md">
-        <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ยอดเรียก</p>
-          <p style={{ fontSize: '1.125rem', fontWeight: '600' }}>{formatCurrency(totals.called)}</p>
-        </div>
-        <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ยอดเก็บ</p>
-          <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-success)' }}>{formatCurrency(totals.collected)}</p>
-        </div>
-        <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ยอดเบิกเงิน</p>
-          <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-warning)' }}>{formatCurrency(totals.withdrawn)}</p>
-        </div>
-        <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ยอดยืมเงิน</p>
-          <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-secondary)' }}>{formatCurrency(totals.borrowed)}</p>
-        </div>
-        <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>ยอดคืนเงิน</p>
-          <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-success)' }}>{formatCurrency(totals.returned)}</p>
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-md">
+        {totals.called !== 0 && (
+          <>
+            <div>
+              <p style={{ color: 'var(--text-primary)', opacity: 0.8, fontSize: '0.875rem', marginBottom: '0.25rem', fontWeight: '500' }}>ยอดเรียก</p>
+              <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--text-primary)' }}>{formatCurrency(totals.called)}</p>
+            </div>
+            <div>
+              <p style={{ color: 'var(--accent-success)', opacity: 0.8, fontSize: '0.875rem', marginBottom: '0.25rem', fontWeight: '500' }}>ยอดเก็บ</p>
+              <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-success)' }}>{formatCurrency(totals.collected)}</p>
+            </div>
+          </>
+        )}
+        {totals.withdrawn !== 0 && (
+          <div>
+            <p style={{ color: 'var(--accent-warning)', opacity: 0.8, fontSize: '0.875rem', marginBottom: '0.25rem', fontWeight: '500' }}>ยอดเบิกเงิน</p>
+            <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-warning)' }}>{formatCurrency(totals.withdrawn)}</p>
+          </div>
+        )}
+        {totals.borrowed !== 0 && (
+          <>
+            <div>
+              <p style={{ color: 'var(--accent-secondary)', opacity: 0.8, fontSize: '0.875rem', marginBottom: '0.25rem', fontWeight: '500' }}>ยอดยืมเงิน</p>
+              <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-secondary)' }}>{formatCurrency(totals.borrowed)}</p>
+            </div>
+            <div>
+              <p style={{ color: 'var(--accent-success)', opacity: 0.8, fontSize: '0.875rem', marginBottom: '0.25rem', fontWeight: '500' }}>ยอดคืนเงิน</p>
+              <p style={{ fontSize: '1.125rem', fontWeight: '600', color: 'var(--accent-success)' }}>{formatCurrency(totals.returned)}</p>
+            </div>
+          </>
+        )}
       </div>
       
       {(totals.outstanding > 0 || totals.outstandingReturn > 0) && (

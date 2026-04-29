@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Colors - Light Mode */
-  --bg-primary: #f8fafc;
-  --bg-secondary: #f1f5f9;
-  --bg-card: #ffffff;
-  --bg-hover: #f1f5f9;
-  --border-color: #e2e8f0;
+  /* Colors - 60% Pink Tone */
+  --bg-primary: #fdf2f8; /* Soft pink background */
+  --bg-secondary: #fce7f3; /* 60% Pink Accent Area */
+  --bg-card: rgba(255, 255, 255, 0.85); /* Glassmorphism white */
+  --bg-hover: #fbcfe8;
+  --border-color: #f9a8d4; /* Pink border */
   
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --text-primary: #831843; /* Dark pink for contrast */
+  --text-secondary: #9d174d;
+  --text-muted: #db2777;
   
   --accent-primary: #db2777; /* Pink (Brand) */
   --accent-secondary: #f472b6; /* Light Pink */
@@ -39,11 +39,11 @@
   --radius-lg: 0.75rem;
   --radius-full: 9999px;
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
-  --shadow-glow: 0 0 15px rgba(219, 39, 119, 0.2);
+  /* Shadows - Pink Tinted */
+  --shadow-sm: 0 2px 4px 0 rgba(219, 39, 119, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(219, 39, 119, 0.1), 0 2px 4px -1px rgba(219, 39, 119, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(219, 39, 119, 0.15), 0 4px 6px -2px rgba(219, 39, 119, 0.1);
+  --shadow-glow: 0 0 20px rgba(219, 39, 119, 0.3);
   --bg-main: var(--bg-secondary);
   
   /* Transitions */
@@ -59,7 +59,8 @@
 
 body {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-primary);
+  background-color: #f1f5f9;
+  min-height: 100vh;
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -94,6 +95,8 @@ button {
 
 .bg-card {
   background-color: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   box-shadow: var(--shadow-sm);
@@ -103,7 +106,7 @@ button {
 
 .bg-card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg), 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
 .flex { display: flex; }
