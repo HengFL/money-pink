@@ -18,6 +18,7 @@
   --accent-warning: #f59e0b; /* Yellow (Warning) */
   --accent-danger: #ef4444; /* Red (Danger) */
   --accent-info: #3b82f6; /* Blue (Info) */
+  --accent-orange: #ea580c; /* Dark Orange */
   
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, #db2777 0%, #f472b6 100%);
@@ -25,6 +26,7 @@
   --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
   --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   --gradient-info: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --gradient-orange: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
 
   /* Spacing - Compact */
   --spacing-xs: 0.15rem;

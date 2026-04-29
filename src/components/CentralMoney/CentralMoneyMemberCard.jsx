@@ -22,7 +22,7 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
         <div style={{ marginBottom: 'var(--spacing-md)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
             <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดเก็บ</span>
-            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-success)' }}>
+            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: (totals.called > 0 && totals.collected >= totals.called) ? 'var(--accent-success)' : 'var(--accent-danger)' }}>
               {totals.called > 0 ? ((totals.collected / totals.called) * 100).toFixed(1) : '0.0'}%
             </span>
           </div>
@@ -31,8 +31,8 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
               style={{ 
                 height: '100%', 
                 width: `${totals.called > 0 ? Math.min(100, (totals.collected / totals.called) * 100) : 0}%`, 
-                backgroundColor: 'var(--accent-success)',
-                backgroundImage: 'var(--gradient-success)',
+                backgroundColor: (totals.called > 0 && totals.collected >= totals.called) ? 'var(--accent-success)' : 'var(--accent-danger)',
+                backgroundImage: (totals.called > 0 && totals.collected >= totals.called) ? 'var(--gradient-success)' : 'var(--gradient-danger)',
                 borderRadius: 'var(--radius-full)',
                 transition: 'width 1s ease-in-out'
               }} 
@@ -45,7 +45,7 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
         <div style={{ marginBottom: 'var(--spacing-md)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
             <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดคืนเงิน</span>
-            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-info)' }}>
+            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: (totals.borrowed > 0 && totals.returned >= totals.borrowed) ? 'var(--accent-info)' : 'var(--accent-orange)' }}>
               {((totals.returned / totals.borrowed) * 100).toFixed(1)}%
             </span>
           </div>
@@ -54,8 +54,8 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
               style={{ 
                 height: '100%', 
                 width: `${Math.min(100, Math.max(0, (totals.returned / totals.borrowed) * 100))}%`, 
-                backgroundColor: 'var(--accent-info)',
-                backgroundImage: 'var(--gradient-info)',
+                backgroundColor: (totals.borrowed > 0 && totals.returned >= totals.borrowed) ? 'var(--accent-info)' : 'var(--accent-orange)',
+                backgroundImage: (totals.borrowed > 0 && totals.returned >= totals.borrowed) ? 'var(--gradient-info)' : 'var(--gradient-orange)',
                 borderRadius: 'var(--radius-full)',
                 transition: 'width 1s ease-in-out'
               }} 

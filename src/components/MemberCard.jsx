@@ -21,7 +21,7 @@ export const MemberCard = ({ member, index }) => {
       <div style={{ marginBottom: 'var(--spacing-md)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
           <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดจ่าย</span>
-          <span style={{ fontSize: '0.875rem', fontWeight: '600', color: 'var(--accent-success)' }}>
+          <span style={{ fontSize: '0.875rem', fontWeight: '600', color: (totals.cost > 0 && totals.paid >= totals.cost) ? 'var(--accent-success)' : 'var(--accent-danger)' }}>
             {totals.cost > 0 ? ((totals.paid / totals.cost) * 100).toFixed(1) : '0.0'}%
           </span>
         </div>
@@ -30,8 +30,8 @@ export const MemberCard = ({ member, index }) => {
             style={{ 
               height: '100%', 
               width: `${totals.cost > 0 ? Math.min(100, (totals.paid / totals.cost) * 100) : 0}%`, 
-              backgroundColor: 'var(--accent-success)',
-              backgroundImage: 'var(--gradient-success)',
+              backgroundColor: (totals.cost > 0 && totals.paid >= totals.cost) ? 'var(--accent-success)' : 'var(--accent-danger)',
+              backgroundImage: (totals.cost > 0 && totals.paid >= totals.cost) ? 'var(--gradient-success)' : 'var(--gradient-danger)',
               borderRadius: 'var(--radius-full)',
               transition: 'width 1s ease-in-out'
             }} 

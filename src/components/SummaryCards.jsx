@@ -32,14 +32,18 @@ export const SummaryCards = ({ totals }) => {
       </div>
 
       {/* ค้างจ่ายรวม (Total Outstanding Pay) */}
-      <div className="bg-card animate-fade-in" style={{ animationDelay: '0.3s', backgroundColor: '#fef2f2', borderColor: '#fecaca' }}>
+      <div className="bg-card animate-fade-in" style={{ 
+        animationDelay: '0.3s', 
+        backgroundColor: totals.outstandingPay === 0 ? 'var(--bg-card)' : '#fef2f2', 
+        borderColor: totals.outstandingPay === 0 ? 'var(--border-color)' : '#fecaca' 
+      }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
-          <h3 style={{ color: 'var(--accent-danger)', opacity: 0.8, fontSize: '0.875rem', fontWeight: '600' }}>ค้างจ่ายทั้งหมด</h3>
-          <div style={{ padding: '0.5rem', backgroundColor: 'rgba(220, 38, 38, 0.15)', borderRadius: 'var(--radius-full)' }}>
-            <AlertCircle size={20} className="text-danger" />
+          <h3 style={{ color: totals.outstandingPay === 0 ? '#64748b' : 'var(--accent-danger)', opacity: 0.8, fontSize: '0.875rem', fontWeight: '600' }}>ค้างจ่ายทั้งหมด</h3>
+          <div style={{ padding: '0.5rem', backgroundColor: totals.outstandingPay === 0 ? 'rgba(148, 163, 184, 0.1)' : 'rgba(220, 38, 38, 0.15)', borderRadius: 'var(--radius-full)' }}>
+            <AlertCircle size={20} style={{ color: totals.outstandingPay === 0 ? '#94a3b8' : 'var(--accent-danger)' }} />
           </div>
         </div>
-        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--accent-danger)' }}>
+        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: totals.outstandingPay === 0 ? '#94a3b8' : 'var(--accent-danger)' }}>
           {formatCurrency(totals.outstandingPay)}
         </div>
       </div>
@@ -73,12 +77,12 @@ export const SummaryCards = ({ totals }) => {
       {/* ค้างรับรวม (Total Outstanding Receive) */}
       <div className="bg-card animate-fade-in col-span-1 lg:col-span-2" style={{ animationDelay: '0.5s' }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
-          <h3 style={{ color: 'var(--accent-secondary)', opacity: 0.8, fontWeight: '500', fontSize: '0.875rem' }}>ค้างรับทั้งหมด</h3>
-          <div style={{ padding: '0.5rem', backgroundColor: 'rgba(139, 92, 246, 0.1)', borderRadius: 'var(--radius-full)' }}>
-            <PiggyBank size={20} style={{ color: 'var(--accent-secondary)' }} />
+          <h3 style={{ color: totals.outstandingReceive === 0 ? '#64748b' : 'var(--accent-secondary)', opacity: 0.8, fontWeight: totals.outstandingReceive === 0 ? '600' : '500', fontSize: '0.875rem' }}>ค้างรับทั้งหมด</h3>
+          <div style={{ padding: '0.5rem', backgroundColor: totals.outstandingReceive === 0 ? 'rgba(148, 163, 184, 0.1)' : 'rgba(139, 92, 246, 0.1)', borderRadius: 'var(--radius-full)' }}>
+            <PiggyBank size={20} style={{ color: totals.outstandingReceive === 0 ? '#94a3b8' : 'var(--accent-secondary)' }} />
           </div>
         </div>
-        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--accent-secondary)' }}>
+        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: totals.outstandingReceive === 0 ? '#94a3b8' : 'var(--accent-secondary)' }}>
           {formatCurrency(totals.outstandingReceive)}
         </div>
       </div>
