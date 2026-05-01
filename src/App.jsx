@@ -27,7 +27,7 @@ function App() {
           onClick={() => setActiveTab('real-estate')}
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.5rem',
-            padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-full)', fontWeight: '600', 
+            padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)', fontWeight: '600', fontSize: '0.875rem',
             backgroundColor: activeTab === 'real-estate' ? '#fff' : 'var(--bg-card)', 
             color: activeTab === 'real-estate' ? 'var(--accent-info)' : 'var(--text-primary)', 
             border: activeTab === 'real-estate' ? '2px solid var(--accent-info)' : '1px solid var(--border-color)', 
@@ -43,7 +43,7 @@ function App() {
           onClick={() => setActiveTab('central-money')}
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.5rem',
-            padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-full)', fontWeight: '600', 
+            padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)', fontWeight: '600', fontSize: '0.875rem',
             backgroundColor: activeTab === 'central-money' ? '#fff' : 'var(--bg-card)', 
             color: activeTab === 'central-money' ? 'var(--accent-success)' : 'var(--text-primary)', 
             border: activeTab === 'central-money' ? '2px solid var(--accent-success)' : '1px solid var(--border-color)', 

@@ -8,14 +8,14 @@ export const CentralMoneySummaryCards = ({ totals }) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-md" style={{ marginBottom: 'var(--spacing-lg)' }}>
       {/* ยอดคงเหลือทั้งหมด (Total Balance) */}
-      <div className="bg-card animate-fade-in col-span-2 md:col-span-2 lg:col-span-4" style={{ animationDelay: '0.05s', border: '2px solid var(--accent-primary)', background: 'linear-gradient(to right, rgba(59, 130, 246, 0.05), transparent)' }}>
+      <div className="bg-card animate-fade-in col-span-2 md:col-span-2 lg:col-span-4" style={{ animationDelay: '0.05s', border: '1px solid var(--accent-info)', backgroundColor: 'rgba(59, 130, 246, 0.05)' }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
-          <h3 style={{ color: 'var(--accent-primary)', opacity: 0.9, fontSize: '1rem', fontWeight: '700' }}>ยอดคงเหลือทั้งหมด</h3>
-          <div style={{ padding: '0.5rem', backgroundColor: 'var(--accent-primary)', borderRadius: 'var(--radius-full)' }}>
-            <PiggyBank size={24} style={{ color: 'white' }} />
+          <h3 style={{ color: 'var(--accent-info)', opacity: 0.8, fontSize: '0.875rem', fontWeight: '500' }}>ยอดคงเหลือทั้งหมด</h3>
+          <div style={{ padding: '0.5rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: 'var(--radius-full)' }}>
+            <PiggyBank size={20} style={{ color: 'var(--accent-info)' }} />
           </div>
         </div>
-        <div style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--accent-primary)' }}>
+        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--accent-info)' }}>
           {formatCurrency(balance)}
         </div>
       </div>

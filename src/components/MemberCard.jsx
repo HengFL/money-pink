@@ -5,7 +5,15 @@ import { User, CheckCircle, AlertTriangle, HelpCircle } from 'lucide-react';
 export const MemberCard = ({ member, index }) => {
   const { name, totals, statuses } = member;
 
+  const getProgressStyle = (percent) => {
+    if (percent >= 100) return { color: 'var(--accent-success)', bg: 'var(--gradient-success)' };
+    if (percent > 50) return { color: 'var(--accent-orange)', bg: 'var(--gradient-orange)' };
+    if (percent > 0) return { color: 'var(--accent-danger)', bg: 'var(--gradient-danger)' };
+    return { color: '#9ca3af', bg: 'none' };
+  };
 
+  const percentPaid = totals.cost > 0 ? (totals.paid / totals.cost) * 100 : 0;
+  const paidStyle = getProgressStyle(percentPaid);
 
   return (
     <div className="bg-card animate-fade-in" style={{ animationDelay: `${0.1 * (index + 1)}s`, marginBottom: 'var(--spacing-md)' }}>
@@ -21,17 +29,17 @@ export const MemberCard = ({ member, index }) => {
       <div style={{ marginBottom: 'var(--spacing-md)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
           <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดจ่าย</span>
-          <span style={{ fontSize: '0.875rem', fontWeight: '600', color: (totals.cost > 0 && totals.paid >= totals.cost) ? 'var(--accent-success)' : 'var(--accent-danger)' }}>
-            {totals.cost > 0 ? ((totals.paid / totals.cost) * 100).toFixed(1) : '0.0'}%
+          <span style={{ fontSize: '0.875rem', fontWeight: '600', color: paidStyle.color }}>
+            {percentPaid.toFixed(1)}%
           </span>
         </div>
-        <div style={{ width: '100%', height: '10px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '6px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
           <div 
             style={{ 
               height: '100%', 
-              width: `${totals.cost > 0 ? Math.min(100, (totals.paid / totals.cost) * 100) : 0}%`, 
-              backgroundColor: (totals.cost > 0 && totals.paid >= totals.cost) ? 'var(--accent-success)' : 'var(--accent-danger)',
-              backgroundImage: (totals.cost > 0 && totals.paid >= totals.cost) ? 'var(--gradient-success)' : 'var(--gradient-danger)',
+              width: `${Math.min(100, percentPaid)}%`, 
+              backgroundColor: paidStyle.color,
+              backgroundImage: paidStyle.bg,
               borderRadius: 'var(--radius-full)',
               transition: 'width 1s ease-in-out'
             }} 

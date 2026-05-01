@@ -5,7 +5,18 @@ import { User, CheckCircle, AlertTriangle, HelpCircle } from 'lucide-react';
 export const CentralMoneyMemberCard = ({ member, index }) => {
   const { name, totals, statuses } = member;
 
+  const getProgressStyle = (percent) => {
+    if (percent >= 100) return { color: 'var(--accent-success)', bg: 'var(--gradient-success)' };
+    if (percent > 50) return { color: 'var(--accent-orange)', bg: 'var(--gradient-orange)' };
+    if (percent > 0) return { color: 'var(--accent-danger)', bg: 'var(--gradient-danger)' };
+    return { color: '#9ca3af', bg: 'none' };
+  };
 
+  const percentCollected = totals.called > 0 ? (totals.collected / totals.called) * 100 : 0;
+  const collectedStyle = getProgressStyle(percentCollected);
+
+  const percentReturned = totals.borrowed > 0 ? (totals.returned / totals.borrowed) * 100 : 0;
+  const returnedStyle = getProgressStyle(percentReturned);
 
   return (
     <div className="bg-card animate-fade-in" style={{ animationDelay: `${0.1 * (index + 1)}s`, marginBottom: 'var(--spacing-md)' }}>
@@ -18,21 +29,21 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
         </div>
       </div>
 
-      {totals.collected > 0 && (
+      {totals.called > 0 && (
         <div style={{ marginBottom: 'var(--spacing-md)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
             <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดเก็บ</span>
-            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: (totals.called > 0 && totals.collected >= totals.called) ? 'var(--accent-success)' : 'var(--accent-danger)' }}>
-              {totals.called > 0 ? ((totals.collected / totals.called) * 100).toFixed(1) : '0.0'}%
+            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: collectedStyle.color }}>
+              {percentCollected.toFixed(1)}%
             </span>
           </div>
-          <div style={{ width: '100%', height: '10px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+          <div style={{ width: '100%', height: '6px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
             <div 
               style={{ 
                 height: '100%', 
-                width: `${totals.called > 0 ? Math.min(100, (totals.collected / totals.called) * 100) : 0}%`, 
-                backgroundColor: (totals.called > 0 && totals.collected >= totals.called) ? 'var(--accent-success)' : 'var(--accent-danger)',
-                backgroundImage: (totals.called > 0 && totals.collected >= totals.called) ? 'var(--gradient-success)' : 'var(--gradient-danger)',
+                width: `${Math.min(100, percentCollected)}%`, 
+                backgroundColor: collectedStyle.color,
+                backgroundImage: collectedStyle.bg,
                 borderRadius: 'var(--radius-full)',
                 transition: 'width 1s ease-in-out'
               }} 
@@ -45,17 +56,17 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
         <div style={{ marginBottom: 'var(--spacing-md)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
             <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดคืนเงิน</span>
-            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: (totals.borrowed > 0 && totals.returned >= totals.borrowed) ? 'var(--accent-info)' : 'var(--accent-orange)' }}>
-              {((totals.returned / totals.borrowed) * 100).toFixed(1)}%
+            <span style={{ fontSize: '0.875rem', fontWeight: '600', color: returnedStyle.color }}>
+              {percentReturned.toFixed(1)}%
             </span>
           </div>
-          <div style={{ width: '100%', height: '10px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+          <div style={{ width: '100%', height: '6px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
             <div 
               style={{ 
                 height: '100%', 
-                width: `${Math.min(100, Math.max(0, (totals.returned / totals.borrowed) * 100))}%`, 
-                backgroundColor: (totals.borrowed > 0 && totals.returned >= totals.borrowed) ? 'var(--accent-info)' : 'var(--accent-orange)',
-                backgroundImage: (totals.borrowed > 0 && totals.returned >= totals.borrowed) ? 'var(--gradient-info)' : 'var(--gradient-orange)',
+                width: `${Math.min(100, Math.max(0, percentReturned))}%`, 
+                backgroundColor: returnedStyle.color,
+                backgroundImage: returnedStyle.bg,
                 borderRadius: 'var(--radius-full)',
                 transition: 'width 1s ease-in-out'
               }} 
