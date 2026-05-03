@@ -8,32 +8,35 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', padding: '0 0.75rem', paddingTop: '0.75rem', display: 'flex', flexDirection: 'column' }}>
-      <header style={{ textAlign: 'center', marginBottom: '1rem' }}>
+      <header style={{ textAlign: 'center', marginBottom: 'var(--spacing-sm)' }}>
         <h1 style={{ 
-          fontSize: '2.5rem', 
+          fontSize: '2rem', 
           fontWeight: '800', 
-          background: 'linear-gradient(to right, #f472b6, #db2777)', 
+          background: 'var(--gradient-primary)', 
           WebkitBackgroundClip: 'text', 
           WebkitTextFillColor: 'transparent',
           margin: 0,
-          letterSpacing: '-0.025em'
+          letterSpacing: '-0.025em',
+          textShadow: '0 4px 12px rgba(236, 72, 153, 0.15)'
         }}>
           Money Pink
         </h1>
       </header>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', gap: '0.75rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--spacing-md)', gap: '0.5rem', flexWrap: 'wrap' }}>
         <button 
           onClick={() => setActiveTab('real-estate')}
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.5rem',
-            padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)', fontWeight: '600', fontSize: '0.875rem',
-            backgroundColor: activeTab === 'real-estate' ? '#fff' : 'var(--bg-card)', 
+            padding: '0.6rem 1.25rem', borderRadius: 'var(--radius-full)', fontWeight: '600', fontSize: '0.875rem',
+            background: activeTab === 'real-estate' ? 'rgba(255,255,255,0.9)' : 'var(--bg-card)', 
             color: activeTab === 'real-estate' ? 'var(--accent-info)' : 'var(--text-primary)', 
-            border: activeTab === 'real-estate' ? '2px solid var(--accent-info)' : '1px solid var(--border-color)', 
+            border: activeTab === 'real-estate' ? '1.5px solid var(--accent-info)' : '1px solid var(--border-color)', 
             cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            boxShadow: activeTab === 'real-estate' ? '0 0 10px rgba(59, 130, 246, 0.2)' : 'none'
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            boxShadow: activeTab === 'real-estate' ? '0 4px 12px rgba(59, 130, 246, 0.2)' : 'var(--shadow-sm)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)'
           }}
         >
           <Home size={18} />
@@ -43,13 +46,15 @@ function App() {
           onClick={() => setActiveTab('central-money')}
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.5rem',
-            padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)', fontWeight: '600', fontSize: '0.875rem',
-            backgroundColor: activeTab === 'central-money' ? '#fff' : 'var(--bg-card)', 
+            padding: '0.6rem 1.25rem', borderRadius: 'var(--radius-full)', fontWeight: '600', fontSize: '0.875rem',
+            background: activeTab === 'central-money' ? 'rgba(255,255,255,0.9)' : 'var(--bg-card)', 
             color: activeTab === 'central-money' ? 'var(--accent-success)' : 'var(--text-primary)', 
-            border: activeTab === 'central-money' ? '2px solid var(--accent-success)' : '1px solid var(--border-color)', 
+            border: activeTab === 'central-money' ? '1.5px solid var(--accent-success)' : '1px solid var(--border-color)', 
             cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            boxShadow: activeTab === 'central-money' ? '0 0 10px rgba(16, 185, 129, 0.2)' : 'none'
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            boxShadow: activeTab === 'central-money' ? '0 4px 12px rgba(16, 185, 129, 0.2)' : 'var(--shadow-sm)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)'
           }}
         >
           <Landmark size={18} />

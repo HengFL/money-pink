@@ -9,6 +9,13 @@ export const CentralMoneyCharts = ({ data }) => {
   const [popupData, setPopupData] = useState(null);
   const popupRef = useRef(null);
 
+  const getProgressStyle = (percent) => {
+    if (percent >= 100) return { color: 'var(--accent-success)', bg: 'var(--gradient-success)' };
+    if (percent > 50) return { color: 'var(--accent-orange)', bg: 'var(--gradient-orange)' };
+    if (percent > 0) return { color: 'var(--accent-danger)', bg: 'var(--gradient-danger)' };
+    return { color: '#9ca3af', bg: 'none' };
+  };
+
   const handleCapture = () => {
     if (popupRef.current) {
       // Temporarily hide buttons for capture
@@ -287,6 +294,12 @@ export const CentralMoneyCharts = ({ data }) => {
                 
                 if (mCalled === undefined && mCollected === undefined && mBorrowed === undefined) return null;
                 
+                const percentCollected = mCalled > 0 ? (mCollected / mCalled) * 100 : 0;
+                const collStyle = getProgressStyle(percentCollected);
+                
+                const percentReturned = mBorrowed > 0 ? (mReturned / mBorrowed) * 100 : 0;
+                const retStyle = getProgressStyle(percentReturned);
+                
                 return (
                   <div key={m.name} style={{ paddingBottom: '0.4rem', borderBottom: '1px dashed var(--border-color)' }}>
                     <p style={{ fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.95rem' }}>
@@ -297,17 +310,17 @@ export const CentralMoneyCharts = ({ data }) => {
                       <div style={{ paddingLeft: '0.75rem', marginBottom: '0.35rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1px' }}>
                           <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดเก็บ</span>
-                          <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--accent-success)' }}>
-                            {((mCollected / mCalled) * 100).toFixed(1)}%
+                          <span style={{ fontSize: '0.65rem', fontWeight: '600', color: collStyle.color }}>
+                            {percentCollected.toFixed(1)}%
                           </span>
                         </div>
                         <div style={{ width: '100%', height: '5px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
                           <div 
                             style={{ 
                               height: '100%', 
-                              width: `${Math.min(100, Math.max(0, (mCollected / mCalled) * 100))}%`, 
-                              backgroundColor: 'var(--accent-success)',
-                              backgroundImage: 'var(--gradient-success)',
+                              width: `${Math.min(100, Math.max(0, percentCollected))}%`, 
+                              backgroundColor: collStyle.color,
+                              backgroundImage: collStyle.bg,
                               borderRadius: 'var(--radius-full)',
                               transition: 'width 1s ease-in-out'
                             }} 
@@ -319,17 +332,17 @@ export const CentralMoneyCharts = ({ data }) => {
                       <div style={{ paddingLeft: '0.75rem', marginBottom: '0.35rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1px' }}>
                           <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดคืนเงิน</span>
-                          <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--accent-info)' }}>
-                            {((mReturned / mBorrowed) * 100).toFixed(1)}%
+                          <span style={{ fontSize: '0.65rem', fontWeight: '600', color: retStyle.color }}>
+                            {percentReturned.toFixed(1)}%
                           </span>
                         </div>
                         <div style={{ width: '100%', height: '5px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
                           <div 
                             style={{ 
                               height: '100%', 
-                              width: `${Math.min(100, Math.max(0, (mReturned / mBorrowed) * 100))}%`, 
-                              backgroundColor: 'var(--accent-info)',
-                              backgroundImage: 'var(--gradient-info)',
+                              width: `${Math.min(100, Math.max(0, percentReturned))}%`, 
+                              backgroundColor: retStyle.color,
+                              backgroundImage: retStyle.bg,
                               borderRadius: 'var(--radius-full)',
                               transition: 'width 1s ease-in-out'
                             }} 
@@ -365,7 +378,7 @@ export const CentralMoneyCharts = ({ data }) => {
               })}
             </div>
             
-            <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f1f5f9', padding: '0.4rem 0.7rem', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f1f5f9', padding: '0.4rem 0.7rem', borderRadius: 'var(--radius-md)' }}>
               <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>ยอดรวม (เส้นแนวโน้ม):</span>
               <span style={{ fontWeight: '800', fontSize: '1.1rem', color: 'var(--accent-primary)' }}>฿{popupData.rowData.totalTrend.toLocaleString()}</span>
             </div>

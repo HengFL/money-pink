@@ -34,8 +34,8 @@ export const SummaryCards = ({ totals }) => {
       {/* ค้างจ่ายรวม (Total Outstanding Pay) */}
       <div className="bg-card animate-fade-in" style={{ 
         animationDelay: '0.3s', 
-        backgroundColor: totals.outstandingPay === 0 ? 'var(--bg-card)' : '#fef2f2', 
-        borderColor: totals.outstandingPay === 0 ? 'var(--border-color)' : '#fecaca' 
+        backgroundColor: totals.outstandingPay === 0 ? '' : 'rgba(254, 242, 242, 0.6)', 
+        borderColor: totals.outstandingPay === 0 ? '' : 'rgba(254, 202, 202, 0.8)' 
       }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
           <h3 style={{ color: totals.outstandingPay === 0 ? '#64748b' : 'var(--accent-danger)', opacity: 0.8, fontSize: '0.875rem', fontWeight: '600' }}>ค้างจ่ายทั้งหมด</h3>
