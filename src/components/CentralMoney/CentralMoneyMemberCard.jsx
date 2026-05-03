@@ -34,7 +34,7 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
             <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดเก็บ</span>
             <span style={{ fontSize: '0.875rem', fontWeight: '600', color: collectedStyle.color }}>
-              {percentCollected.toFixed(1)}%
+              {percentCollected.toFixed(0)}%
             </span>
           </div>
           <div style={{ width: '100%', height: '6px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
@@ -57,7 +57,7 @@ export const CentralMoneyMemberCard = ({ member, index }) => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
             <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดคืนเงิน</span>
             <span style={{ fontSize: '0.875rem', fontWeight: '600', color: returnedStyle.color }}>
-              {percentReturned.toFixed(1)}%
+              {percentReturned.toFixed(0)}%
             </span>
           </div>
           <div style={{ width: '100%', height: '6px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>

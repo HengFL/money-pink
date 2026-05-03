@@ -30,7 +30,7 @@ export const MemberCard = ({ member, index }) => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
           <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดจ่าย</span>
           <span style={{ fontSize: '0.875rem', fontWeight: '600', color: paidStyle.color }}>
-            {percentPaid.toFixed(1)}%
+            {percentPaid.toFixed(0)}%
           </span>
         </div>
         <div style={{ width: '100%', height: '6px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>

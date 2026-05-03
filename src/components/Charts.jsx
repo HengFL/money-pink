@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import html2canvas from 'html2canvas';
 import { Camera } from 'lucide-react';
+import { formatCurrency } from '../utils/dataProcessor';
 
 export const Charts = ({ data }) => {
   const { timelineData, members } = data;
@@ -302,7 +303,7 @@ export const Charts = ({ data }) => {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1px' }}>
                           <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '500' }}>ความคืบหน้ายอดจ่าย</span>
                           <span style={{ fontSize: '0.65rem', fontWeight: '600', color: pStyle.color }}>
-                            {percent.toFixed(1)}%
+                            {percent.toFixed(0)}%
                           </span>
                         </div>
                         <div style={{ width: '100%', height: '5px', backgroundColor: '#f1f5f9', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
@@ -321,9 +322,9 @@ export const Charts = ({ data }) => {
                     )}
                     {mCost > 0 && (
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.35rem', fontSize: '0.8rem', paddingLeft: '0.75rem' }}>
-                        <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ต้นทุนรวม</span><span style={{fontWeight:'700', color:'var(--text-secondary)'}}>฿{mCost.toLocaleString()}</span></div>
-                        {mPaid !== undefined && <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-success)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดจ่าย</span><span style={{fontWeight:'700', color:'var(--accent-success)'}}>฿{mPaid.toLocaleString()}</span></div>}
-                        {mCalcUnpaid !== undefined && <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: mCalcUnpaid === 0 ? '#94a3b8' : 'var(--accent-danger)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ค้างจ่าย</span><span style={{fontWeight:'700', color: mCalcUnpaid === 0 ? '#94a3b8' : 'var(--accent-danger)'}}>฿{mCalcUnpaid.toLocaleString()}</span></div>}
+                        <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ต้นทุนรวม</span><span style={{fontWeight:'700', color:'var(--text-secondary)'}}>{formatCurrency(mCost)}</span></div>
+                        {mPaid !== undefined && <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: 'var(--accent-success)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ยอดจ่าย</span><span style={{fontWeight:'700', color:'var(--accent-success)'}}>{formatCurrency(mPaid)}</span></div>}
+                        {mCalcUnpaid !== undefined && <div style={{ background: '#f1f5f9', padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-md)' }}><span style={{ color: mCalcUnpaid === 0 ? '#94a3b8' : 'var(--accent-danger)', fontWeight: 'bold', display: 'block', fontSize: '0.6rem', marginBottom: '1px', opacity: 0.75 }}>ค้างจ่าย</span><span style={{fontWeight:'700', color: mCalcUnpaid === 0 ? '#94a3b8' : 'var(--accent-danger)'}}>{formatCurrency(mCalcUnpaid)}</span></div>}
                       </div>
                     )}
                   </div>
@@ -333,7 +334,7 @@ export const Charts = ({ data }) => {
             
             <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f1f5f9', padding: '0.4rem 0.7rem', borderRadius: 'var(--radius-md)' }}>
               <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>ยอดรวม (เส้นแนวโน้ม):</span>
-              <span style={{ fontWeight: '800', fontSize: '1.1rem', color: 'var(--accent-primary)' }}>฿{popupData.rowData.totalTrend.toLocaleString()}</span>
+              <span style={{ fontWeight: '800', fontSize: '1.1rem', color: 'var(--accent-primary)' }}>{formatCurrency(popupData.rowData.totalTrend)}</span>
             </div>
           </div>
         </div>
