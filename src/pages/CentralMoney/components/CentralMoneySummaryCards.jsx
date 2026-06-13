@@ -33,7 +33,7 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-md" style={{ marginBottom: 'var(--spacing-md)' }}>
       {/* ยอดคงเหลือทั้งหมด (Total Balance) */}
-      <div className="bg-card animate-fade-in col-span-2 md:col-span-2 lg:col-span-4" style={{ animationDelay: '0.05s', border: '2.5px solid #db2777', backgroundColor: '#fce7f3', padding: 'var(--spacing-lg)' }}>
+      <div className="bg-card animate-fade-in col-span-2 md:col-span-2 lg:col-span-4" style={{ animationDelay: '0.05s', border: '1.5px solid #db2777', backgroundColor: '#fce7f3', padding: 'var(--spacing-lg)' }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
           <h3 style={{ color: '#db2777', fontSize: '0.75rem', fontWeight: '500' }}>ยอดคงเหลือทั้งหมด</h3>
           <div style={{ padding: '0.5rem', backgroundColor: '#fdf2f8', borderRadius: 'var(--radius-full)' }}>
