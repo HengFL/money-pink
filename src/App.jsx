@@ -7,25 +7,8 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', padding: '0 0.25rem', paddingTop: '0.25rem', display: 'flex', flexDirection: 'column' }}>
-      <header style={{ textAlign: 'center', marginBottom: 'var(--spacing-xs)' }}>
-        <h1 style={{ 
-          fontSize: '2rem', 
-          fontWeight: '800', 
-          color: '#db2777',
-          marginBottom: '0.5rem',
-          letterSpacing: '-0.025em',
-          textShadow: '0 4px 12px rgba(219, 39, 119, 0.15)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '0.5rem'
-        }}>
-          <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="Logo" style={{ width: '2rem', height: '2rem' }} />
-          Money Pink
-        </h1>
-      </header>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--spacing-sm)', gap: '0.5rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem', marginBottom: 'var(--spacing-sm)', gap: '0.5rem', flexWrap: 'wrap' }}>
         <button 
           onClick={() => setActiveTab('real-estate')}
           style={{ 

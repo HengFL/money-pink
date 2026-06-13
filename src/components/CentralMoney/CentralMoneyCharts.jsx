@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import ReactApexChart from 'react-apexcharts';
 import html2canvas from 'html2canvas';
 import { formatCurrency } from '../../utils/dataProcessor';
 
@@ -141,31 +141,96 @@ export const CentralMoneyCharts = ({ data }) => {
     '#f97316', // Orange
   ];
 
-  // Popup Modal is handled at the bottom of the component
-  const handleChartClick = (e) => {
-    if (!e) return;
-    let label = '';
-    let rowData = null;
-    
-    if (e.activePayload && e.activePayload.length) {
-      label = e.activeLabel;
-      rowData = e.activePayload[0].payload;
-    } else if (e.activeTooltipIndex !== undefined && chartData[e.activeTooltipIndex]) {
-      label = chartData[e.activeTooltipIndex].name;
-      rowData = chartData[e.activeTooltipIndex];
-    } else if (e.payload) {
-      label = e.payload.name || e.name || '';
-      rowData = e.payload;
-    } else if (e.name) {
-      label = e.name;
-      rowData = e;
-    }
-    
-    if (rowData) {
-      setPopupData({
-        label: label || rowData.name,
-        rowData: rowData
-      });
+  const series = [];
+  members.filter(m => m.name !== 'ตัวแทน').forEach(member => {
+    series.push({
+      name: `${member.name} ยอดเก็บ`,
+      group: member.name,
+      type: 'bar',
+      data: chartData.map(d => d[`${member.name}_collected`] || 0),
+      color: '#10b981'
+    });
+    series.push({
+      name: `${member.name} ยอดค้าง`,
+      group: member.name,
+      type: 'bar',
+      data: chartData.map(d => d[`${member.name}_outstanding`] || 0),
+      color: '#ef4444'
+    });
+  });
+
+  series.push({
+    name: 'ยอดรวม',
+    type: 'line',
+    data: chartData.map(d => d.totalTrend),
+    color: '#db2777'
+  });
+
+  const options = {
+    chart: {
+      type: 'bar',
+      stacked: true,
+      toolbar: { show: false },
+      fontFamily: 'inherit',
+      events: {
+        click: function(event, chartContext, config) {
+          if (config.dataPointIndex !== undefined && config.dataPointIndex !== -1) {
+            const data = chartData[config.dataPointIndex];
+            if (data) {
+              setPopupData({
+                label: data.name,
+                rowData: data
+              });
+            }
+          }
+        }
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      width: series.map(s => s.type === 'line' ? 2 : 0),
+      curve: 'straight'
+    },
+    markers: {
+      size: series.map(s => s.type === 'line' ? 5 : 0),
+      colors: ['#ffffff'],
+      strokeColors: series.map(s => s.color || '#db2777'),
+      strokeWidth: 2,
+    },
+    xaxis: {
+      categories: chartData.map(d => d.name),
+      labels: { style: { colors: '#9d174d', fontWeight: 500 } },
+      axisBorder: { show: true, color: '#9d174d' },
+      axisTicks: { show: true, color: '#9d174d' }
+    },
+    yaxis: {
+      min: 0,
+      labels: {
+        formatter: (value) => `฿${value}`,
+        style: { colors: '#9d174d', fontWeight: 500 }
+      },
+      axisBorder: { show: true, color: '#9d174d' },
+      axisTicks: { show: true, color: '#9d174d' }
+    },
+    grid: {
+      borderColor: '#fbcfe8',
+      strokeDashArray: 3,
+      xaxis: { lines: { show: false } },
+      yaxis: { lines: { show: true } }
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      y: { formatter: function (y) { if(typeof y !== "undefined") { return  "฿" + y.toFixed(0); } return y; } }
+    },
+    legend: { show: false },
+    plotOptions: {
+      bar: {
+        columnWidth: '80%',
+        borderRadius: 2
+      }
     }
   };
 
@@ -224,61 +289,11 @@ export const CentralMoneyCharts = ({ data }) => {
           </select>
         </div>
       </div>
-      <div style={{ height: '320px', width: '100%' }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart
-            data={chartData}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-            onMouseDown={handleChartClick}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
-            <XAxis dataKey="name" stroke="var(--text-secondary)" tick={{ fill: 'var(--text-secondary)' }} />
-            <YAxis stroke="var(--text-secondary)" tick={{ fill: 'var(--text-secondary)' }} tickFormatter={(value) => `฿${value}`} />
-            <Tooltip cursor={{ fill: 'rgba(0,0,0,0.04)' }} content={() => null} />
-            <Legend content={<CustomLegend />} />
-            
-            {/* Grouped Stacked Bars for Members */}
-            {members.filter(m => m.name !== 'ตัวแทน').map((member, index) => (
-              <React.Fragment key={`bars-${member.name}`}>
-                <Bar 
-                  dataKey={`${member.name}_collected`} 
-                  stackId={member.name} 
-                  fill="var(--accent-success)" 
-                  stroke="none"
-                  fillOpacity={0.9} 
-                  legendType="none" 
-                  style={{ cursor: 'pointer' }}
-                />
-                <Bar 
-                  dataKey={`${member.name}_outstanding`} 
-                  stackId={member.name} 
-                  fill="var(--accent-danger)" 
-                  stroke="none"
-                  fillOpacity={0.9} 
-                  legendType="none" 
-                  radius={[4, 4, 0, 0]} 
-                  style={{ cursor: 'pointer' }}
-                />
-              </React.Fragment>
-            ))}
-            
-            {/* Single Line for Overall Trend */}
-            <Line 
-              type="monotone" 
-              dataKey="totalTrend" 
-              stroke="var(--accent-primary)" 
-              strokeWidth={3}
-              dot={{ r: 4, strokeWidth: 2 }}
-              activeDot={{ r: 6, strokeWidth: 0 }}
-              style={{ cursor: 'pointer' }}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <div style={{ height: '320px', width: '100%' }}>
+          <ReactApexChart options={options} series={series} type="bar" height="100%" width="100%" />
+        </div>
+        <CustomLegend />
       </div>
     </div>
       

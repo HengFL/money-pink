@@ -3,7 +3,7 @@ import { formatCurrency } from '../../utils/dataProcessor';
 
 
 export const CentralMoneySummaryCards = ({ totals, growth }) => {
-  const renderGrowth = (value) => {
+  const renderGrowth = (value, inverse = false) => {
     if (value === undefined || value === null) return null;
     const isPositive = value > 0;
     const isNegative = value < 0;
@@ -11,13 +11,13 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
     let icon = null;
     
     if (isPositive) {
-      color = '#16a34a';
+      color = inverse ? '#dcfce7' : '#16a34a';
       icon = '▲';
     } else if (isNegative) {
-      color = '#dc2626';
+      color = inverse ? 'rgba(255, 255, 255, 0.9)' : '#dc2626';
       icon = '▼';
     } else {
-      color = '#64748b';
+      color = inverse ? 'rgba(255, 255, 255, 0.7)' : '#64748b';
       icon = '-';
     }
 
@@ -77,7 +77,7 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
       {/* ยอดค้างทั้งหมด (Total Outstanding) */}
       <div className="bg-card animate-fade-in" style={{ 
         animationDelay: '0.3s', 
-        backgroundColor: totals.outstanding === 0 ? 'var(--bg-card)' : '#fef2f2', 
+        backgroundColor: totals.outstanding === 0 ? 'var(--bg-card)' : 'rgba(254, 242, 242, 0.6)', 
         border: totals.outstanding === 0 ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid rgba(220, 38, 38, 0.2)',
         padding: 'var(--spacing-lg)'
       }}>
