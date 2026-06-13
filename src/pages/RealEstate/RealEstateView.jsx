@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { processDashboardData } from '../utils/dataProcessor';
-import { Dashboard } from './Dashboard';
-
-
-const API_URL = 'https://script.googleusercontent.com/macros/echo?user_content_key=AWDtjMUXZc8ENGNqufB_jL4JGclgSzTkMibN3C75zrLGNNMnodQRnI8bc9whGWox-9MM5wzU7BFvb7_u55RDkT5Ha7MeAcjIjDG3Q6jDWaTOFxkMO5zBuEj7g5jXb9U3KqsLKVW94CJrJ7DgRgZJWmCciwqMRORQ6rPLZHBqTjb1ZsXyi8dKQVRpbQZib4Z2PmAdJ9yhyB5HplDinyL2PfHQRO9pIPmfnhk_Kg3s0yP4iruq5Rg_uJ43o_4T6bpm3glEQcN43ODS9xZXJW-IfLU&lib=MIJPxqDUveZMHAuU6EOU0QllmX6t1pghm';
+import { processDashboardData } from '../../utils/dataProcessor';
+import { Dashboard } from './components/Dashboard';
+import { REAL_ESTATE_API_URL, MEMBER_ORDER } from '../../config/constants';
 
 export const RealEstateView = () => {
   const [rawData, setRawData] = useState(null);
@@ -15,7 +13,7 @@ export const RealEstateView = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(API_URL);
+      const response = await fetch(REAL_ESTATE_API_URL);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -44,7 +42,7 @@ export const RealEstateView = () => {
   const availableMembers = useMemo(() => {
     if (!rawData) return [];
     const members = new Set(rawData.map(item => item['สมาชิก'] ? String(item['สมาชิก']).trim() : '').filter(Boolean));
-    const customOrder = ['รอมือลาห์', 'ปาตีเมาะห์', 'อิบรอเฮง', 'ซากีเราะห์'];
+    const customOrder = MEMBER_ORDER;
     return Array.from(members).sort((a, b) => {
       const indexA = customOrder.indexOf(a);
       const indexB = customOrder.indexOf(b);

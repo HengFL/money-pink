@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import html2canvas from 'html2canvas';
-import { formatCurrency } from '../utils/dataProcessor';
+import { formatCurrency } from '../../../utils/dataProcessor';
 
 export const Charts = ({ data }) => {
   const { timelineData, members } = data;

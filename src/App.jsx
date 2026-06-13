@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { RealEstateView } from './components/RealEstateView';
-import { CentralMoneyView } from './components/CentralMoneyView';
+import { RealEstateView } from './pages/RealEstate/RealEstateView';
+import { CentralMoneyView } from './pages/CentralMoney/CentralMoneyView';
 
 function App() {
   const [activeTab, setActiveTab] = useState('real-estate');

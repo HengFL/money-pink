@@ -1,0 +1,3 @@
+export const REAL_ESTATE_API_URL = 'https://script.googleusercontent.com/macros/echo?user_content_key=AWDtjMUXZc8ENGNqufB_jL4JGclgSzTkMibN3C75zrLGNNMnodQRnI8bc9whGWox-9MM5wzU7BFvb7_u55RDkT5Ha7MeAcjIjDG3Q6jDWaTOFxkMO5zBuEj7g5jXb9U3KqsLKVW94CJrJ7DgRgZJWmCciwqMRORQ6rPLZHBqTjb1ZsXyi8dKQVRpbQZib4Z2PmAdJ9yhyB5HplDinyL2PfHQRO9pIPmfnhk_Kg3s0yP4iruq5Rg_uJ43o_4T6bpm3glEQcN43ODS9xZXJW-IfLU&lib=MIJPxqDUveZMHAuU6EOU0QllmX6t1pghm';
+export const CENTRAL_MONEY_API_URL = 'https://script.google.com/macros/s/AKfycbxTd6QCvaTFiNSjbVicZKb_8bAw3VCjOOMwPlUtZ8hKmdllFcb30D5Azi0Iqj_XMpY/exec';
+export const MEMBER_ORDER = ['รอมือลาห์', 'ปาตีเมาะห์', 'อิบรอเฮง', 'ซากีเราะห์'];

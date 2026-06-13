@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { processCentralMoneyData } from '../utils/centralMoneyDataProcessor';
-import { CentralMoneyDashboard } from './CentralMoney/CentralMoneyDashboard';
-
-
-const CENTRAL_API_URL = 'https://script.google.com/macros/s/AKfycbxTd6QCvaTFiNSjbVicZKb_8bAw3VCjOOMwPlUtZ8hKmdllFcb30D5Azi0Iqj_XMpY/exec';
+import { processCentralMoneyData } from '../../utils/centralMoneyDataProcessor';
+import { CentralMoneyDashboard } from './components/CentralMoneyDashboard';
+import { CENTRAL_MONEY_API_URL, MEMBER_ORDER } from '../../config/constants';
 
 export const CentralMoneyView = () => {
   const [rawData, setRawData] = useState(null);
@@ -15,7 +13,7 @@ export const CentralMoneyView = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(CENTRAL_API_URL);
+      const response = await fetch(CENTRAL_MONEY_API_URL);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -44,7 +42,7 @@ export const CentralMoneyView = () => {
   const availableMembers = useMemo(() => {
     if (!rawData) return [];
     const members = new Set(rawData.map(item => item['สมาชิก'] ? String(item['สมาชิก']).trim() : '').filter(Boolean));
-    const customOrder = ['รอมือลาห์', 'ปาตีเมาะห์', 'อิบรอเฮง', 'ซากีเราะห์'];
+    const customOrder = MEMBER_ORDER;
     return Array.from(members).sort((a, b) => {
       const indexA = customOrder.indexOf(a);
       const indexB = customOrder.indexOf(b);

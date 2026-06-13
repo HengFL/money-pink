@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatCurrency } from '../../utils/dataProcessor';
+import { formatCurrency } from '../../../utils/dataProcessor';
 
 
 export const CentralMoneySummaryCards = ({ totals, growth }) => {
