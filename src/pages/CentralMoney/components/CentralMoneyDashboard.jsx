@@ -111,7 +111,7 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
         </div>
 
         <header style={{ marginBottom: 'var(--spacing-md)', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: 'var(--spacing-md)', color: '#15803d', display: 'inline-block' }}>
+        <h1 style={{ fontSize: '1.25rem', fontWeight: '800', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-success)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(16, 185, 129, 0.2)', letterSpacing: '0.5px' }}>
           CENTRAL MONEY (เงินกลาง)
         </h1>
         

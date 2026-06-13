@@ -338,7 +338,7 @@ export const Charts = ({ data }) => {
             </div>
             
             <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '0.35rem', marginBottom: '0.5rem', paddingRight: '2.5rem' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: '800', color: '#1d4ed8', marginBottom: '0.1rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>REAL ESTATE (อสังหาริมทรัพย์)</h3>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.5px', background: 'var(--gradient-info)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(59, 130, 246, 0.2)' }}>REAL ESTATE (อสังหาริมทรัพย์)</h3>
               <div style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
                 ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)', fontWeight: '600' }}>{popupData.label}</span>
               </div>

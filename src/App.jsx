@@ -6,54 +6,59 @@ function App() {
   const [activeTab, setActiveTab] = useState('real-estate');
 
   return (
-    <div style={{ minHeight: '100vh', padding: '0 0.25rem', paddingTop: '0.25rem', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', padding: '0 var(--spacing-lg)', paddingTop: 'var(--spacing-lg)', display: 'flex', flexDirection: 'column', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem', marginBottom: 'var(--spacing-sm)', gap: '0.5rem', flexWrap: 'wrap' }}>
-        <button 
-          onClick={() => setActiveTab('real-estate')}
-          style={{ 
-            display: 'flex', alignItems: 'center', gap: '0.25rem',
-            padding: '0.4rem 0.85rem', borderRadius: 'var(--radius-full)', fontWeight: '700', fontSize: '0.875rem',
-            background: activeTab === 'real-estate' ? 'var(--gradient-primary)' : 'rgba(255, 255, 255, 0.3)', 
-            color: activeTab === 'real-estate' ? '#ffffff' : 'var(--text-primary)', 
-            border: activeTab === 'real-estate' ? '1px solid #db2777' : '1px solid rgba(255, 255, 255, 0.5)', 
-            borderTop: activeTab === 'real-estate' ? '1px solid #f472b6' : '1px solid rgba(255, 255, 255, 1)',
-            borderLeft: activeTab === 'real-estate' ? '1px solid #f472b6' : '1px solid rgba(255, 255, 255, 1)',
-            cursor: 'pointer',
-            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            boxShadow: activeTab === 'real-estate' ? '0 8px 16px rgba(219, 39, 119, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2)' : '0 4px 6px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.8)',
-            backdropFilter: 'blur(20px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(150%)'
-          }}
-        >
-          <i className="fa-solid fa-house" style={{ fontSize: '18px' }}></i>
-          REAL ESTATE
-        </button>
-        <button 
-          onClick={() => setActiveTab('central-money')}
-          style={{ 
-            display: 'flex', alignItems: 'center', gap: '0.25rem',
-            padding: '0.4rem 0.85rem', borderRadius: 'var(--radius-full)', fontWeight: '700', fontSize: '0.875rem',
-            background: activeTab === 'central-money' ? 'var(--gradient-primary)' : 'rgba(255, 255, 255, 0.3)', 
-            color: activeTab === 'central-money' ? '#ffffff' : 'var(--text-primary)', 
-            border: activeTab === 'central-money' ? '1px solid #db2777' : '1px solid rgba(255, 255, 255, 0.5)', 
-            borderTop: activeTab === 'central-money' ? '1px solid #f472b6' : '1px solid rgba(255, 255, 255, 1)',
-            borderLeft: activeTab === 'central-money' ? '1px solid #f472b6' : '1px solid rgba(255, 255, 255, 1)',
-            cursor: 'pointer',
-            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            boxShadow: activeTab === 'central-money' ? '0 8px 16px rgba(219, 39, 119, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2)' : '0 4px 6px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.8)',
-            backdropFilter: 'blur(20px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(150%)'
-          }}
-        >
-          <i className="fa-solid fa-landmark" style={{ fontSize: '18px' }}></i>
-          CENTRAL MONEY
-        </button>
-        
-
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          background: 'rgba(255, 255, 255, 0.4)', 
+          backdropFilter: 'blur(16px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+          padding: '0.35rem', 
+          borderRadius: 'var(--radius-full)',
+          border: '1px solid rgba(255, 255, 255, 0.8)',
+          boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02), 0 4px 10px rgba(0,0,0,0.03)'
+        }}>
+          <button 
+            onClick={() => setActiveTab('real-estate')}
+            style={{ 
+              display: 'flex', alignItems: 'center', gap: '0.4rem',
+              padding: '0.6rem 1.25rem', borderRadius: 'var(--radius-full)', fontWeight: '700', fontSize: '0.875rem',
+              background: activeTab === 'real-estate' ? 'var(--gradient-primary)' : 'transparent', 
+              color: activeTab === 'real-estate' ? '#ffffff' : 'var(--text-secondary)', 
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              boxShadow: activeTab === 'real-estate' ? '0 4px 12px rgba(219, 39, 119, 0.3)' : 'none',
+              position: 'relative'
+            }}
+          >
+            <i className="fa-solid fa-house" style={{ fontSize: '15px', color: activeTab === 'real-estate' ? '#ffffff' : 'var(--text-muted)' }}></i>
+            REAL ESTATE
+          </button>
+          
+          <button 
+            onClick={() => setActiveTab('central-money')}
+            style={{ 
+              display: 'flex', alignItems: 'center', gap: '0.4rem',
+              padding: '0.6rem 1.25rem', borderRadius: 'var(--radius-full)', fontWeight: '700', fontSize: '0.875rem',
+              background: activeTab === 'central-money' ? 'var(--gradient-primary)' : 'transparent', 
+              color: activeTab === 'central-money' ? '#ffffff' : 'var(--text-secondary)', 
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              boxShadow: activeTab === 'central-money' ? '0 4px 12px rgba(219, 39, 119, 0.3)' : 'none',
+              position: 'relative'
+            }}
+          >
+            <i className="fa-solid fa-landmark" style={{ fontSize: '15px', color: activeTab === 'central-money' ? '#ffffff' : 'var(--text-muted)' }}></i>
+            CENTRAL MONEY
+          </button>
+        </div>
       </div>
 
-      <div style={{ display: activeTab === 'real-estate' ? 'block' : 'none' }}>
+      <div style={{ display: activeTab === 'real-estate' ? 'block' : 'none', width: '100%' }}>
         <RealEstateView />
       </div>
       <div style={{ display: activeTab === 'central-money' ? 'block' : 'none' }}>

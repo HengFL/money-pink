@@ -111,7 +111,7 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
         </div>
 
         <header style={{ marginBottom: 'var(--spacing-md)', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: 'var(--spacing-md)', color: '#1d4ed8', display: 'inline-block' }}>
+        <h1 style={{ fontSize: '1.25rem', fontWeight: '800', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-info)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(59, 130, 246, 0.2)', letterSpacing: '0.5px' }}>
           REAL ESTATE (อสังหาริมทรัพย์)
         </h1>
         
