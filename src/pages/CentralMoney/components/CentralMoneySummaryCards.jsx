@@ -33,7 +33,7 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-md" style={{ marginBottom: 'var(--spacing-md)' }}>
       {/* ยอดคงเหลือทั้งหมด (Total Balance) */}
-      <div className="bg-card animate-fade-in col-span-2 md:col-span-2 lg:col-span-4" style={{ animationDelay: '0.05s', border: '1.5px solid #db2777', backgroundColor: '#fce7f3', padding: 'var(--spacing-lg)' }}>
+      <div className="bg-card animate-fade-in col-span-2 md:col-span-2 lg:col-span-4" style={{ animationDelay: '0.05s', border: '1.5px solid #db2777', padding: 'var(--spacing-lg)' }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
           <h3 style={{ color: '#db2777', fontSize: '0.75rem', fontWeight: '500' }}>ยอดคงเหลือทั้งหมด</h3>
           <div style={{ padding: '0.5rem', backgroundColor: '#fdf2f8', borderRadius: 'var(--radius-full)' }}>
@@ -77,7 +77,6 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
       {/* ยอดค้างทั้งหมด (Total Outstanding) */}
       <div className="bg-card animate-fade-in" style={{ 
         animationDelay: '0.3s', 
-        backgroundColor: totals.outstanding === 0 ? 'var(--bg-card)' : 'rgba(254, 242, 242, 0.6)', 
         border: totals.outstanding === 0 ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid rgba(220, 38, 38, 0.2)',
         padding: 'var(--spacing-lg)'
       }}>
@@ -125,7 +124,6 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
       {/* ยอดค้างคืนทั้งหมด (Total Outstanding Return) */}
       <div className="bg-card animate-fade-in" style={{ 
         animationDelay: '0.7s', 
-        backgroundColor: totals.outstandingReturn === 0 ? 'var(--bg-card)' : '#fff7ed', 
         border: totals.outstandingReturn === 0 ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid rgba(234, 88, 12, 0.2)',
         padding: 'var(--spacing-lg)'
       }}>
@@ -144,7 +142,6 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
       {/* ยอดเบิกเงินทั้งหมด (Total Withdrawn) */}
       <div className="bg-card animate-fade-in" style={{ 
         animationDelay: '0.8s',
-        backgroundColor: totals.withdrawn === 0 ? 'var(--bg-card)' : '#faf5ff', 
         border: '1px solid rgba(109, 40, 217, 0.2)',
         padding: 'var(--spacing-lg)'
       }}>

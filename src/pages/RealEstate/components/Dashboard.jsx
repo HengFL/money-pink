@@ -31,6 +31,12 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
         logging: false,
         useCORS: true,
         onclone: (clonedDoc) => {
+          const captureArea = clonedDoc.getElementById('capture-area');
+          if (captureArea) {
+            captureArea.style.padding = '1rem';
+            captureArea.style.backgroundColor = '#ffffff';
+            captureArea.style.borderRadius = '0';
+          }
           const animatedElements = clonedDoc.querySelectorAll('.animate-fade-in');
           animatedElements.forEach(el => {
             el.style.animation = 'none';
@@ -66,6 +72,12 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
         logging: false,
         useCORS: true,
         onclone: (clonedDoc) => {
+          const captureArea = clonedDoc.getElementById('capture-area');
+          if (captureArea) {
+            captureArea.style.padding = '1rem';
+            captureArea.style.backgroundColor = '#ffffff';
+            captureArea.style.borderRadius = '0';
+          }
           const animatedElements = clonedDoc.querySelectorAll('.animate-fade-in');
           animatedElements.forEach(el => {
             el.style.animation = 'none';
@@ -103,8 +115,8 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
   };
 
   return (
-    <div style={{ padding: 'var(--spacing-md) 0', maxWidth: '1200px', margin: '0 auto' }}>
-      <div ref={summaryAreaRef} style={{ position: 'relative', marginBottom: 'var(--spacing-xl)' }}>
+    <div style={{ padding: '0 0 var(--spacing-md) 0', maxWidth: '1200px', margin: '0 auto' }}>
+      <div id="capture-area" ref={summaryAreaRef} style={{ position: 'relative', marginBottom: 'var(--spacing-xl)', padding: '1rem' }}>
         <div style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', display: 'flex', gap: '0.4rem' }} className="no-capture">
           <button 
             onClick={handleCopy}
@@ -224,13 +236,15 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
         </div>
       )}
       
-      <h2 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: 'var(--spacing-sm)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: 'var(--spacing-xl)' }}>
+      <h2 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: 'var(--spacing-sm)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: 'var(--spacing-xl)', padding: '0 var(--spacing-md)' }}>
         <i className="fa-solid fa-chart-line" style={{ color: 'var(--accent-secondary)', fontSize: '0.9rem' }}></i>
         กราฟภาพรวมแนวโน้ม
       </h2>
-      <Charts data={data} />
+      <div style={{ padding: '0 var(--spacing-md)' }}>
+        <Charts data={data} />
+      </div>
 
-      <div style={{ marginTop: 'var(--spacing-xl)' }}>
+      <div style={{ marginTop: 'var(--spacing-xl)', padding: '0 var(--spacing-md)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-md)', flexWrap: 'wrap', gap: '0.5rem' }}>
           <h2 style={{ fontSize: '1rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-primary)', margin: 0 }}>
             <i className="fa-solid fa-user-group" style={{ color: 'var(--accent-secondary)', fontSize: '0.9rem' }}></i>

@@ -61,7 +61,6 @@ export const SummaryCards = ({ totals, growth }) => {
       {/* ค้างจ่ายรวม (Total Outstanding Pay) */}
       <div className="bg-card animate-fade-in" style={{ 
         animationDelay: '0.3s', 
-        backgroundColor: totals.outstandingPay === 0 ? 'var(--bg-card)' : 'rgba(254, 242, 242, 0.6)', 
         border: totals.outstandingPay === 0 ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid rgba(220, 38, 38, 0.2)',
         padding: 'var(--spacing-lg)'
       }}>
@@ -108,7 +107,6 @@ export const SummaryCards = ({ totals, growth }) => {
       {/* ค้างรับรวม (Total Outstanding Receive) */}
       <div className="bg-card animate-fade-in col-span-1 lg:col-span-2" style={{ 
         animationDelay: '0.5s',
-        backgroundColor: totals.outstandingReceive === 0 ? 'var(--bg-card)' : 'rgba(255, 247, 237, 0.6)', 
         border: totals.outstandingReceive === 0 ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid rgba(234, 88, 12, 0.2)',
         padding: 'var(--spacing-lg)'
       }}>
