@@ -36,6 +36,13 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
             el.style.animation = 'none';
             el.style.opacity = '1';
           });
+          const titles = clonedDoc.querySelectorAll('.capture-title');
+          titles.forEach(el => {
+            el.style.background = 'transparent';
+            el.style.WebkitBackgroundClip = 'initial';
+            el.style.WebkitTextFillColor = 'initial';
+            el.style.color = '#3b82f6';
+          });
         }
       }).then(canvas => {
         const link = document.createElement('a');
@@ -63,6 +70,13 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
           animatedElements.forEach(el => {
             el.style.animation = 'none';
             el.style.opacity = '1';
+          });
+          const titles = clonedDoc.querySelectorAll('.capture-title');
+          titles.forEach(el => {
+            el.style.background = 'transparent';
+            el.style.WebkitBackgroundClip = 'initial';
+            el.style.WebkitTextFillColor = 'initial';
+            el.style.color = '#3b82f6';
           });
         }
       }).then(canvas => {
@@ -122,7 +136,7 @@ export const Dashboard = ({ data, availableYears, selectedYear, onYearChange, av
         </div>
 
         <header style={{ marginBottom: 'var(--spacing-md)', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '1.25rem', fontWeight: '800', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-info)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(59, 130, 246, 0.2)', letterSpacing: '0.5px' }}>
+        <h1 className="capture-title" style={{ fontSize: '1.25rem', fontWeight: '800', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-info)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(59, 130, 246, 0.2)', letterSpacing: '0.5px' }}>
           REAL ESTATE (อสังหาริมทรัพย์)
         </h1>
         

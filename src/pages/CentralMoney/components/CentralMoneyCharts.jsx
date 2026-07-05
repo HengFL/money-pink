@@ -29,7 +29,16 @@ export const CentralMoneyCharts = ({ data }) => {
         backgroundColor: '#ffffff',
         scale: 2,
         logging: false,
-        useCORS: true
+        useCORS: true,
+        onclone: (clonedDoc) => {
+          const titles = clonedDoc.querySelectorAll('.capture-title');
+          titles.forEach(el => {
+            el.style.background = 'transparent';
+            el.style.WebkitBackgroundClip = 'initial';
+            el.style.WebkitTextFillColor = 'initial';
+            el.style.color = '#10b981';
+          });
+        }
       }).then(canvas => {
         const link = document.createElement('a');
         link.download = `central-money-summary-${popupData.label}.png`;
@@ -51,7 +60,16 @@ export const CentralMoneyCharts = ({ data }) => {
         backgroundColor: '#ffffff',
         scale: 2,
         logging: false,
-        useCORS: true
+        useCORS: true,
+        onclone: (clonedDoc) => {
+          const titles = clonedDoc.querySelectorAll('.capture-title');
+          titles.forEach(el => {
+            el.style.background = 'transparent';
+            el.style.WebkitBackgroundClip = 'initial';
+            el.style.WebkitTextFillColor = 'initial';
+            el.style.color = '#10b981';
+          });
+        }
       }).then(canvas => {
         canvas.toBlob(blob => {
           try {
@@ -338,7 +356,7 @@ export const CentralMoneyCharts = ({ data }) => {
             </div>
             
             <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '0.35rem', marginBottom: '0.5rem', paddingRight: '2.5rem' }}>
-              <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.5px', background: 'var(--gradient-success)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(16, 185, 129, 0.2)' }}>CENTRAL MONEY (เงินกลาง)</h3>
+              <h3 className="capture-title" style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.5px', background: 'var(--gradient-success)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(16, 185, 129, 0.2)' }}>CENTRAL MONEY (เงินกลาง)</h3>
               <div style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
                 ข้อมูลประจำ: <span style={{ color: 'var(--accent-primary)', fontWeight: '600' }}>{popupData.label}</span>
               </div>

@@ -36,6 +36,13 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
             el.style.animation = 'none';
             el.style.opacity = '1';
           });
+          const titles = clonedDoc.querySelectorAll('.capture-title');
+          titles.forEach(el => {
+            el.style.background = 'transparent';
+            el.style.WebkitBackgroundClip = 'initial';
+            el.style.WebkitTextFillColor = 'initial';
+            el.style.color = '#10b981';
+          });
         }
       }).then(canvas => {
         const link = document.createElement('a');
@@ -63,6 +70,13 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
           animatedElements.forEach(el => {
             el.style.animation = 'none';
             el.style.opacity = '1';
+          });
+          const titles = clonedDoc.querySelectorAll('.capture-title');
+          titles.forEach(el => {
+            el.style.background = 'transparent';
+            el.style.WebkitBackgroundClip = 'initial';
+            el.style.WebkitTextFillColor = 'initial';
+            el.style.color = '#10b981';
           });
         }
       }).then(canvas => {
@@ -122,7 +136,7 @@ export const CentralMoneyDashboard = ({ data, availableYears, selectedYear, onYe
         </div>
 
         <header style={{ marginBottom: 'var(--spacing-md)', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '1.25rem', fontWeight: '800', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-success)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(16, 185, 129, 0.2)', letterSpacing: '0.5px' }}>
+        <h1 className="capture-title" style={{ fontSize: '1.25rem', fontWeight: '800', marginBottom: 'var(--spacing-md)', background: 'var(--gradient-success)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block', textShadow: '0 2px 10px rgba(16, 185, 129, 0.2)', letterSpacing: '0.5px' }}>
           CENTRAL MONEY (เงินกลาง)
         </h1>
         
