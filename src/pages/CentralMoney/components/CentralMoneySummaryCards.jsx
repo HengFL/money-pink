@@ -3,7 +3,7 @@ import { formatCurrency } from '../../../utils/dataProcessor';
 
 
 export const CentralMoneySummaryCards = ({ totals, growth }) => {
-  const renderGrowth = (value, inverse = false) => {
+  const renderGrowth = (value, inverse = false, size = '0.75rem') => {
     if (value === undefined || value === null) return null;
     const isPositive = value > 0;
     const isNegative = value < 0;
@@ -22,8 +22,8 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
     }
 
     return (
-      <div style={{ fontSize: '0.75rem', fontWeight: '500', color, display: 'flex', alignItems: 'center', gap: '0.2rem', marginTop: '0.25rem' }}>
-        {icon} {isPositive ? '+' : ''}{value.toFixed(2)}%
+      <div style={{ fontSize: size, fontWeight: '500', color, display: 'flex', alignItems: 'center', gap: '0.2rem', marginTop: '0.25rem' }}>
+        <span style={{ fontSize: size === '0.75rem' ? '0.7rem' : '0.6rem' }}>{icon}</span> {isPositive ? '+' : ''}{value.toFixed(2)}%
       </div>
     );
   };
@@ -55,12 +55,12 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
           </span>
         </div>
         {growth && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.35rem', flexWrap: 'wrap' }}>
             {renderGrowth(growth.balance)}
             {growth.balance !== undefined && growth.balance !== null && growth.balanceExcludingOutstanding !== undefined && growth.balanceExcludingOutstanding !== null && (
-              <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.25rem' }}>/</span>
+              <span style={{ color: '#94a3b8', fontSize: '0.65rem' }}>/</span>
             )}
-            {renderGrowth(growth.balanceExcludingOutstanding)}
+            {renderGrowth(growth.balanceExcludingOutstanding, false, '0.65rem')}
           </div>
         )}
       </div>
