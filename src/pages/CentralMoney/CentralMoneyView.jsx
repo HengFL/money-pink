@@ -115,6 +115,10 @@ export const CentralMoneyView = () => {
     const currentBalance = calculateBalance(currentTotals);
     const prevBalance = calculateBalance(prevTotals);
 
+    const calculateBalanceExcludingOutstanding = (t) => t.collected - t.withdrawn;
+    const currentBalanceExcludingOutstanding = calculateBalanceExcludingOutstanding(currentTotals);
+    const prevBalanceExcludingOutstanding = calculateBalanceExcludingOutstanding(prevTotals);
+
     processed.growth = {
       called: calculateGrowth(currentTotals.called, prevTotals.called),
       collected: calculateGrowth(currentTotals.collected, prevTotals.collected),
@@ -123,7 +127,8 @@ export const CentralMoneyView = () => {
       borrowed: calculateGrowth(currentTotals.borrowed, prevTotals.borrowed),
       returned: calculateGrowth(currentTotals.returned, prevTotals.returned),
       outstandingReturn: calculateGrowth(currentTotals.outstandingReturn, prevTotals.outstandingReturn),
-      balance: calculateGrowth(currentBalance, prevBalance)
+      balance: calculateGrowth(currentBalance, prevBalance),
+      balanceExcludingOutstanding: calculateGrowth(currentBalanceExcludingOutstanding, prevBalanceExcludingOutstanding)
     };
 
     return processed;

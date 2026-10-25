@@ -29,21 +29,40 @@ export const CentralMoneySummaryCards = ({ totals, growth }) => {
   };
 
   const balance = (totals.collected + totals.returned) - (totals.withdrawn + totals.borrowed);
+  const balanceExcludingOutstanding = totals.collected - totals.withdrawn;
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-md" style={{ marginBottom: 'var(--spacing-md)' }}>
-      {/* ยอดคงเหลือทั้งหมด (Total Balance) */}
+      {/* ยอดคงเหลือสุทธิ / ยอดคงเหลือเก็บจริง */}
       <div className="bg-card animate-fade-in col-span-2 md:col-span-2 lg:col-span-4" style={{ animationDelay: '0.05s', border: '1.5px solid #db2777', padding: 'var(--spacing-lg)' }}>
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-sm)' }}>
-          <h3 style={{ color: '#db2777', fontSize: '0.75rem', fontWeight: '500' }}>ยอดคงเหลือทั้งหมด</h3>
+          <h3 style={{ fontSize: '0.75rem', fontWeight: '500' }}>
+            <span style={{ color: '#db2777' }}>ยอดคงเหลือสุทธิ</span>
+            <span style={{ color: '#94a3b8', margin: '0 0.3rem' }}>/</span>
+            <span style={{ color: '#15803d' }}>ยอดคงเหลือเก็บจริง</span>
+          </h3>
           <div style={{ padding: '0.5rem', backgroundColor: '#fdf2f8', borderRadius: 'var(--radius-full)' }}>
             <i className="fa-solid fa-piggy-bank" style={{ fontSize: '20px', color: '#db2777' }}></i>
           </div>
         </div>
-        <div style={{ fontSize: '1.125rem', fontWeight: '700', color: '#db2777' }}>
-          {formatCurrency(balance)}
+        <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.35rem' }}>
+          <span style={{ fontSize: '1.125rem', fontWeight: '700', color: balance >= 0 ? '#db2777' : '#dc2626' }}>
+            {formatCurrency(balance)}
+          </span>
+          <span style={{ color: '#94a3b8', fontSize: '0.75rem', fontWeight: '400' }}>/</span>
+          <span style={{ fontSize: '0.75rem', fontWeight: '600', color: balanceExcludingOutstanding >= 0 ? '#15803d' : '#dc2626' }}>
+            {formatCurrency(balanceExcludingOutstanding)}
+          </span>
         </div>
-        {growth && renderGrowth(growth.balance)}
+        {growth && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap' }}>
+            {renderGrowth(growth.balance)}
+            {growth.balance !== undefined && growth.balance !== null && growth.balanceExcludingOutstanding !== undefined && growth.balanceExcludingOutstanding !== null && (
+              <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.25rem' }}>/</span>
+            )}
+            {renderGrowth(growth.balanceExcludingOutstanding)}
+          </div>
+        )}
       </div>
 
       {/* ยอดเรียกทั้งหมด (Total Called) */}

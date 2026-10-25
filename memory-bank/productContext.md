@@ -36,7 +36,9 @@ Tracks shared treasury funds, operations, and short-term loans/deposits. It trac
 * **ยอดยืมเงิน (Borrowed)**: Short-term personal loans taken by members from the treasury.
 * **ยอดคืนเงิน (Returned)**: Loan repayments made back to the treasury.
 * **ยอดค้างคืน (Outstanding Return)**: Remaining unpaid loans.
-* **เงินคงเหลือ (Treasury Balance)**: Calculated dynamically as `(Collected + Returned) - (Withdrawn + Borrowed)`.
+* **เงินคงเหลือ (Treasury Balance)**:
+  * **ยอดคงเหลือเก็บจริง**: `ยอดเก็บ - ยอดเบิก` (Contributions actually collected minus expenses withdrawn).
+  * **ยอดคงเหลือสุทธิ (รวมยืม-คืน)**: `(ยอดเก็บ + ยอดคืน) - (ยอดเบิก + ยอดยืม)` (Net cash in treasury including personal loan repayments and disbursements).
 
 ### 3. Key Interactive Capabilities
 * **Dynamic Filtering**: Filter dashboards by **Year (ปี)** and **Member (สมาชิก)**. Supports "All" selection for aggregated multi-year or group insights.
