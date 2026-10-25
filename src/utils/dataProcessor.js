@@ -20,12 +20,47 @@ export const processDashboardData = (rawData, selectedYear = 'All') => {
     return abbrs[m] || m;
   };
   
+  const thaiMonthMap = {
+    'มกราคม': '01',
+    'กุมภาพันธ์': '02',
+    'มีนาคม': '03',
+    'เมษายน': '04',
+    'พฤษภาคม': '05',
+    'มิถุนายน': '06',
+    'กรกฎาคม': '07',
+    'สิงหาคม': '08',
+    'กันยายน': '09',
+    'ตุลาคม': '10',
+    'พฤศจิกายน': '11',
+    'ธันวาคม': '12'
+  };
+
   const thaiMonths = [
     { key: 'มกรา', val: '01' }, { key: 'กุมภา', val: '02' }, { key: 'มีนา', val: '03' },
     { key: 'เมษา', val: '04' }, { key: 'พฤษภา', val: '05' }, { key: 'มิถุนา', val: '06' },
     { key: 'กรกฎา', val: '07' }, { key: 'สิงหา', val: '08' }, { key: 'กันยา', val: '09' },
     { key: 'ตุลา', val: '10' }, { key: 'พฤศจิ', val: '11' }, { key: 'ธันวา', val: '12' }
   ];
+
+  const parseMonthKey = (monthRaw) => {
+    if (!monthRaw) return '';
+    const text = String(monthRaw).trim();
+    if (thaiMonthMap[text]) return thaiMonthMap[text];
+    for (const tm of thaiMonths) {
+      if (text.includes(tm.key)) return tm.val;
+    }
+    const abbrMap = {
+      'ม.ค.': '01', 'ก.พ.': '02', 'มี.ค.': '03', 'เม.ย.': '04',
+      'พ.ค.': '05', 'มิ.ย.': '06', 'ก.ค.': '07', 'ส.ค.': '08',
+      'ก.ย.': '09', 'ต.ค.': '10', 'พ.ย.': '11', 'ธ.ค.': '12'
+    };
+    if (abbrMap[text]) return abbrMap[text];
+    const num = parseInt(text, 10);
+    if (!isNaN(num) && num >= 1 && num <= 12) {
+      return String(num).padStart(2, '0');
+    }
+    return '';
+  };
 
   rawData.forEach(item => {
     // Parse numeric values, treating empty strings as 0
@@ -94,27 +129,25 @@ export const processDashboardData = (rawData, selectedYear = 'All') => {
     memberData.transactions.push(item);
 
     // Calculate timeline data (Year or Month) for the chart
-    let dateStr = item['วันที่สรุป'] || item['วันที่ทำ'];
-    let monthKey = '';
-    let yearKey = String(item['source_year'] || new Date().getFullYear());
+    // Primary: use source_year (ค.ศ.) and เดือน (Thai full month)
+    let yearKey = item['source_year'] ? String(item['source_year']).trim() : '';
+    let monthKey = parseMonthKey(item['เดือน']);
 
-    if (dateStr) {
+    // Fallback to วันที่สรุป or วันที่ทำ if source_year or เดือน is missing
+    let dateStr = item['วันที่สรุป'] || item['วันที่ทำ'];
+    if ((!yearKey || !monthKey) && dateStr) {
       const d = new Date(dateStr);
       if (!isNaN(d.getTime())) {
-        yearKey = String(d.getFullYear());
-        monthKey = String(d.getMonth() + 1).padStart(2, '0');
+        if (!yearKey) yearKey = String(d.getFullYear());
+        if (!monthKey) monthKey = String(d.getMonth() + 1).padStart(2, '0');
       }
     }
-    
+
+    if (!yearKey) {
+      yearKey = String(new Date().getFullYear());
+    }
     if (!monthKey) {
-      const text = item['การลงทุน'] || '';
-      for (const tm of thaiMonths) {
-        if (text.includes(tm.key)) {
-          monthKey = tm.val;
-          break;
-        }
-      }
-      if (!monthKey) monthKey = '01'; // Default to Jan if unknown to group it safely
+      monthKey = '01'; // Default safely if unknown
     }
 
     let timeKey = '';
